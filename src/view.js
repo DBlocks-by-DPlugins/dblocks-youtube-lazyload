@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         while (targetElement != null) {
             if (
                 targetElement.matches(
-                    ".lazy-youtube-player-container .play-button"
+                    ".dblocks-dblocks-youtube-lazyload .play-button"
                 )
             ) {
                 const youtubeId = targetElement.getAttribute("data-youtube-id");

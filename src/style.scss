@@ -1,8 +1,17 @@
+.dblocks-dblocks-youtube-lazyload {
+    @import './styles/thumb';
+	@import './styles/play-button';
+
+    
+    position: relative;
+    display: flex;
+}
+
 // button{
 // 	cursor: pointer;
 // }
 
-// .lazy-youtube-player-container {
+// .dblocks-dblocks-youtube-lazyload{
 //     position: relative;
 //     display: flex;
 

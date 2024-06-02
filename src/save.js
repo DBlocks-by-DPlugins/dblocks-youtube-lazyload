@@ -8,7 +8,7 @@ const Save = ({ attributes }) => {
     const youtubeId = extractYoutubeId(url);
 
     // Construct the class name based on the alignment
-    const className = `lazy-youtube-player-container ${
+    const className = `dblocks-dblocks-youtube-lazyload ${
         align ? "align" + align : ""
     }`;
 
