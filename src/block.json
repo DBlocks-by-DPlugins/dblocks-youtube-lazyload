@@ -29,11 +29,23 @@
         },
         "playButtonSize": {
             "type": "string",
-            "default": "64px"
+            "default": "100px"
+        },
+        "minHeight": {
+            "type": "string",
+            "default": "100px"
         },
         "playButtonStyle": {
             "type": "number",
             "default": 0
+        },
+        "color": {
+            "type": "string",
+            "default": "#800080"
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#FFFFFF"
         }
     },
     "textdomain": "dblocks-youtube-lazyload",

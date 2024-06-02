@@ -61,8 +61,8 @@ const Edit = ({ attributes, setAttributes }) => {
                 quality={quality}
                 playButtonSize={playButtonSize}
                 playButtonStyle={playButtonStyle}
-                color={color}
-                textColor={textColor}
+                color={color || '#800080'}
+                textColor={textColor || '#FFFFFF'}
             />
         </div>
     );
@@ -79,31 +79,32 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
                 </PanelBody>
                 <PanelColorSettings
-                        title="Color Settings"
-                        colorSettings={[
-                            {
-                                value: textColor,
-                                onChange: handleTextColorChange,
-                                label: 'Play Color',
-                            },
-                            {
-                                value: color,
-                                onChange: handleColorChange,
-                                label: 'Play Background Color',
-                            },                            
-                        ]}
+                    title="Color Settings"
+                    colorSettings={[
+                        {
+                            value: textColor,
+                            onChange: handleTextColorChange,
+                            label: 'Play Color',
+                        },
+                        {
+                            value: color,
+                            onChange: handleColorChange,
+                            label: 'Play Background Color',
+                        },                            
+                    ]}
                 />
                 <PanelBody title="Player Icon" initialOpen={true}>
-                    <PlayerStyleButtons handlePlayerStyleChange={handlePlayerStyleChange} />
+                    <PlayerStyleButtons 
+                        handlePlayerStyleChange={handlePlayerStyleChange} 
+                        color={color || '#800080'} 
+                        textColor={textColor || '#FFFFFF'} 
+                    />
                     <HeightControl
                         label="Size"
                         value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
-
-                   
                 </PanelBody>
-
             </InspectorControls>
             <BlockControls>
                 <ToolbarGroup>
@@ -114,7 +115,10 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
                 </ToolbarGroup>
             </BlockControls>
-            <div {...useBlockProps()} style={{ minHeight }}>
+            <div 
+                {...useBlockProps()} 
+                style={{ minHeight, '--play-background': color || '#800080', '--play-icon-color': textColor || '#FFFFFF', '--play-button-size': playButtonSize || '64px' }}
+            >
                 {isEditing ? (
                     <div className="lazy-load-edit-wrapper">
                         <div className="lazy-load__title">YouTube URL</div>
