@@ -1,6 +1,4 @@
-// Edit.js
-
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 import {
     TextControl,
     SelectControl,
@@ -9,58 +7,132 @@ import {
     ToolbarButton,
 } from '@wordpress/components';
 import { BlockControls, InspectorControls, useBlockProps, PanelColorSettings } from '@wordpress/block-editor';
+import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
 import PlayerStyleButtons from './components/PlayerStyleButtons';
 import { extractYoutubeId } from './components/youtubeHelpers';
 import './editor.scss';
 
+const STORE_NAME = 'dblocks/global-settings';
+
+const DEFAULT_GLOBAL_SETTINGS = {
+    color: '#800080',
+    textColor: '#FFFFFF',
+    quality: 'maxresdefault',
+    playButtonSize: '100px',
+    playButtonStyle: 0,
+    minHeight: '100px',
+};
+
+// Registering a custom data store for global settings
+registerStore(STORE_NAME, {
+    reducer(state = DEFAULT_GLOBAL_SETTINGS, action) {
+        switch (action.type) {
+            case 'SET_GLOBAL_SETTING':
+                return {
+                    ...state,
+                    [action.attribute]: action.value,
+                };
+            case 'SET_GLOBAL_SETTINGS':
+                return {
+                    ...state,
+                    ...action.settings,
+                };
+            default:
+                return state;
+        }
+    },
+    actions: {
+        setGlobalSetting(attribute, value) {
+            return {
+                type: 'SET_GLOBAL_SETTING',
+                attribute,
+                value,
+            };
+        },
+        setGlobalSettings(settings) {
+            return {
+                type: 'SET_GLOBAL_SETTINGS',
+                settings,
+            };
+        },
+    },
+    selectors: {
+        getGlobalSettings(state) {
+            return state;
+        },
+        getGlobalSetting(state, attribute) {
+            return state[attribute];
+        },
+    },
+    resolvers: {
+        *getGlobalSettings() {
+            const response = yield fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
+            const settings = yield response.json();
+            return {
+                type: 'SET_GLOBAL_SETTINGS',
+                settings,
+            };
+        },
+    },
+});
+
 const Edit = ({ attributes, setAttributes }) => {
     const {
         url = '',
-        quality = defaultQuality,
-        playButtonSize = '100px',
-        minHeight = '100px',
-        playButtonStyle = 0,
-        color = '#800080',
-        textColor = '#FFFFFF',
+        quality,
+        playButtonSize,
+        minHeight,
+        playButtonStyle,
+        color,
+        textColor,
     } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
+
+    const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
+    const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
 
     useEffect(() => {
         if (!containerId) {
             const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
             setAttributes({ containerId: newContainerId });
         }
+    }, [containerId, setAttributes]);
 
+    useEffect(() => {
         const fetchGlobalSettings = async () => {
             try {
                 const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
-                if (!response.ok) throw new Error('Network response was not ok.');
-
                 const settings = await response.json();
-                setAttributes({
-                    color: settings.color,
-                    textColor: settings.textColor,
-                    quality: settings.quality,
-                    playButtonSize: settings.playButtonSize,
-                    playButtonStyle: settings.playButtonStyle,
-                    minHeight: settings.minHeight,
-                });
+                setGlobalSettings(settings);
+                setAttributes(settings);
             } catch (error) {
                 console.error('Failed to fetch global settings:', error);
             }
         };
 
         fetchGlobalSettings();
-    }, [setAttributes]);
+    }, [setGlobalSettings, setAttributes]);
 
-    const updateGlobalSetting = async (attribute, value) => {
+    useEffect(() => {
+        setAttributes({
+            color: globalSettings.color,
+            textColor: globalSettings.textColor,
+            quality: globalSettings.quality,
+            playButtonSize: globalSettings.playButtonSize,
+            playButtonStyle: globalSettings.playButtonStyle,
+            minHeight: globalSettings.minHeight,
+        });
+    }, [globalSettings, setAttributes]);
+
+    const saveGlobalSetting = async (attribute, value) => {
+        setGlobalSetting(attribute, value);
         setAttributes({ [attribute]: value });
 
         try {
-            const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings', {
+            await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,8 +140,6 @@ const Edit = ({ attributes, setAttributes }) => {
                 },
                 body: JSON.stringify({ [attribute]: value }),
             });
-
-            if (!response.ok) throw new Error(`Network response was not ok when updating ${attribute}.`);
         } catch (error) {
             console.error(`Failed to update global ${attribute}:`, error);
         }
@@ -80,24 +150,24 @@ const Edit = ({ attributes, setAttributes }) => {
     };
 
     const handleQualityChange = (newQuality) => {
-        updateGlobalSetting('quality', newQuality);
+        saveGlobalSetting('quality', newQuality);
     };
 
     const handlePlayButtonSizeChange = (newSize) => {
-        updateGlobalSetting('playButtonSize', newSize);
+        saveGlobalSetting('playButtonSize', newSize);
     };
 
     const handlePlayerStyleChange = (style) => {
         const styleIndex = parseInt(style.replace('style', ''), 10) - 1;
-        updateGlobalSetting('playButtonStyle', styleIndex);
+        saveGlobalSetting('playButtonStyle', styleIndex);
     };
 
     const handleColorChange = (colorValue) => {
-        updateGlobalSetting('color', colorValue);
+        saveGlobalSetting('color', colorValue);
     };
 
     const handleTextColorChange = (colorValue) => {
-        updateGlobalSetting('textColor', colorValue);
+        saveGlobalSetting('textColor', colorValue);
     };
 
     const youtubeId = extractYoutubeId(url);
