@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "dblocks/dblocks-youtube-lazyload",
+    "version": "1.0.0",
+    "title": "Youtube LazyLoad",
+    "category": "dblocks",
+    "icon": "video-alt3",
+    "description": "Block that load YouTube video scripts only if user clicks on the play button",
+    "example": {},
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ]
+    },
+    "attributes": {
+        "url": {
+            "type": "string",
+            "__experimentalRole": "content"
+        },
+        "containerId": {
+            "type": "string"
+        },
+        "quality": {
+            "type": "string",
+            "default": "maxresdefault"
+        }
+    },
+    "textdomain": "dblocks-youtube-lazyload",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}
