@@ -3,20 +3,28 @@
 import { useState, useEffect } from '@wordpress/element';
 import {
     TextControl,
+    SelectControl,
+    PanelBody,
     ToolbarGroup,
     ToolbarButton,
-    SelectControl,
-    PanelBody
 } from '@wordpress/components';
-import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
-import { extractYoutubeId } from './components/youtubeHelpers';
+import { BlockControls, InspectorControls, useBlockProps, PanelColorSettings } from '@wordpress/block-editor';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
 import PlayerStyleButtons from './components/PlayerStyleButtons';
+import { extractYoutubeId } from './components/youtubeHelpers';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const { url, quality, playButtonSize, minHeight, playButtonStyle, color, textColor } = attributes;
+    const {
+        url = '',
+        quality = defaultQuality,
+        playButtonSize = '100px',
+        minHeight = '100px',
+        playButtonStyle = 0,
+        color = '#800080',
+        textColor = '#FFFFFF',
+    } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
 
@@ -25,31 +33,71 @@ const Edit = ({ attributes, setAttributes }) => {
             const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
             setAttributes({ containerId: newContainerId });
         }
-    }, [url, containerId]);
+
+        const fetchGlobalSettings = async () => {
+            try {
+                const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
+                if (!response.ok) throw new Error('Network response was not ok.');
+
+                const settings = await response.json();
+                setAttributes({
+                    color: settings.color,
+                    textColor: settings.textColor,
+                    quality: settings.quality,
+                    playButtonSize: settings.playButtonSize,
+                    playButtonStyle: settings.playButtonStyle,
+                    minHeight: settings.minHeight,
+                });
+            } catch (error) {
+                console.error('Failed to fetch global settings:', error);
+            }
+        };
+
+        fetchGlobalSettings();
+    }, [setAttributes]);
+
+    const updateGlobalSetting = async (attribute, value) => {
+        setAttributes({ [attribute]: value });
+
+        try {
+            const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-WP-Nonce': wpApiSettings.nonce,
+                },
+                body: JSON.stringify({ [attribute]: value }),
+            });
+
+            if (!response.ok) throw new Error(`Network response was not ok when updating ${attribute}.`);
+        } catch (error) {
+            console.error(`Failed to update global ${attribute}:`, error);
+        }
+    };
 
     const handleUrlChange = (newUrl) => {
         setAttributes({ url: newUrl });
     };
 
     const handleQualityChange = (newQuality) => {
-        setAttributes({ quality: newQuality });
+        updateGlobalSetting('quality', newQuality);
     };
 
     const handlePlayButtonSizeChange = (newSize) => {
-        setAttributes({ playButtonSize: newSize });
+        updateGlobalSetting('playButtonSize', newSize);
     };
 
     const handlePlayerStyleChange = (style) => {
-        const styleIndex = parseInt(style.replace('style', '')) - 1;
-        setAttributes({ playButtonStyle: styleIndex });
+        const styleIndex = parseInt(style.replace('style', ''), 10) - 1;
+        updateGlobalSetting('playButtonStyle', styleIndex);
     };
 
     const handleColorChange = (colorValue) => {
-        setAttributes({ color: colorValue });
+        updateGlobalSetting('color', colorValue);
     };
 
     const handleTextColorChange = (colorValue) => {
-        setAttributes({ textColor: colorValue });
+        updateGlobalSetting('textColor', colorValue);
     };
 
     const youtubeId = extractYoutubeId(url);
@@ -61,8 +109,8 @@ const Edit = ({ attributes, setAttributes }) => {
                 quality={quality}
                 playButtonSize={playButtonSize}
                 playButtonStyle={playButtonStyle}
-                color={color || '#800080'}
-                textColor={textColor || '#FFFFFF'}
+                color={color}
+                textColor={textColor}
             />
         </div>
     );
@@ -73,7 +121,7 @@ const Edit = ({ attributes, setAttributes }) => {
                 <PanelBody title="Thumbnail" initialOpen={true}>
                     <SelectControl
                         label="Image Quality"
-                        value={quality || defaultQuality}
+                        value={quality}
                         options={qualityOptions}
                         onChange={handleQualityChange}
                     />
@@ -90,18 +138,23 @@ const Edit = ({ attributes, setAttributes }) => {
                             value: color,
                             onChange: handleColorChange,
                             label: 'Play Background Color',
-                        },                            
+                        },
                     ]}
                 />
                 <PanelBody title="Player Icon" initialOpen={true}>
-                    <PlayerStyleButtons 
-                        handlePlayerStyleChange={handlePlayerStyleChange} 
-                        color={color || '#800080'} 
-                        textColor={textColor || '#FFFFFF'} 
+                    <PlayerStyleButtons
+                        handlePlayerStyleChange={handlePlayerStyleChange}
+                        color={color}
+                        textColor={textColor}
                     />
-                    <HeightControl
+                    <SelectControl
                         label="Size"
-                        value={playButtonSize || '64px'}
+                        value={playButtonSize}
+                        options={[
+                            { label: 'Small', value: '32px' },
+                            { label: 'Medium', value: '64px' },
+                            { label: 'Large', value: '100px' },
+                        ]}
                         onChange={handlePlayButtonSizeChange}
                     />
                 </PanelBody>
@@ -109,15 +162,20 @@ const Edit = ({ attributes, setAttributes }) => {
             <BlockControls>
                 <ToolbarGroup>
                     <ToolbarButton
-                        icon={isEditing ? "edit" : "visibility"}
-                        label={isEditing ? "Edit URL" : "View Image"}
+                        icon={isEditing ? 'edit' : 'visibility'}
+                        label={isEditing ? 'Edit URL' : 'View Image'}
                         onClick={() => setIsEditing((current) => !current)}
                     />
                 </ToolbarGroup>
             </BlockControls>
-            <div 
-                {...useBlockProps()} 
-                style={{ minHeight, '--play-background': color || '#800080', '--play-icon-color': textColor || '#FFFFFF', '--play-button-size': playButtonSize || '64px' }}
+            <div
+                {...useBlockProps()}
+                style={{
+                    minHeight,
+                    '--play-background': color,
+                    '--play-icon-color': textColor,
+                    '--play-button-size': playButtonSize,
+                }}
             >
                 {isEditing ? (
                     <div className="lazy-load-edit-wrapper">
@@ -126,7 +184,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             Paste a link to the content you want to display on your site.
                         </div>
                         <TextControl
-                            value={url || ""}
+                            value={url}
                             onChange={handleUrlChange}
                             placeholder="Enter YouTube URL"
                         />
