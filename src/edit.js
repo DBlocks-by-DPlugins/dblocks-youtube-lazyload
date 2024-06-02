@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import {
     TextControl,
     SelectControl,
@@ -6,7 +6,7 @@ import {
     ToolbarGroup,
     ToolbarButton,
 } from '@wordpress/components';
-import { BlockControls, InspectorControls, useBlockProps, PanelColorSettings } from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
@@ -78,7 +78,7 @@ registerStore(STORE_NAME, {
     },
 });
 
-const Edit = ({ attributes, setAttributes }) => {
+const Edit = ({ attributes, setAttributes, isSelected }) => {
     const {
         url = '',
         quality,
@@ -90,16 +90,10 @@ const Edit = ({ attributes, setAttributes }) => {
     } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
+    const globalSettingsLoaded = useRef(false);
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
-
-    useEffect(() => {
-        if (!containerId) {
-            const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
-            setAttributes({ containerId: newContainerId });
-        }
-    }, [containerId, setAttributes]);
 
     useEffect(() => {
         const fetchGlobalSettings = async () => {
@@ -107,7 +101,11 @@ const Edit = ({ attributes, setAttributes }) => {
                 const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
                 const settings = await response.json();
                 setGlobalSettings(settings);
-                setAttributes(settings);
+                setAttributes((prevAttributes) => ({
+                    ...prevAttributes,
+                    ...settings,
+                }));
+                globalSettingsLoaded.current = true;
             } catch (error) {
                 console.error('Failed to fetch global settings:', error);
             }
@@ -117,6 +115,8 @@ const Edit = ({ attributes, setAttributes }) => {
     }, [setGlobalSettings, setAttributes]);
 
     useEffect(() => {
+        if (!globalSettingsLoaded.current) return;
+
         setAttributes({
             color: globalSettings.color,
             textColor: globalSettings.textColor,
@@ -126,6 +126,13 @@ const Edit = ({ attributes, setAttributes }) => {
             minHeight: globalSettings.minHeight,
         });
     }, [globalSettings, setAttributes]);
+
+    useEffect(() => {
+        if (!containerId) {
+            const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
+            setAttributes({ containerId: newContainerId });
+        }
+    }, [containerId, setAttributes]);
 
     const saveGlobalSetting = async (attribute, value) => {
         setGlobalSetting(attribute, value);
@@ -217,14 +224,9 @@ const Edit = ({ attributes, setAttributes }) => {
                         color={color}
                         textColor={textColor}
                     />
-                    <SelectControl
+                    <HeightControl
                         label="Size"
-                        value={playButtonSize}
-                        options={[
-                            { label: 'Small', value: '32px' },
-                            { label: 'Medium', value: '64px' },
-                            { label: 'Large', value: '100px' },
-                        ]}
+                        value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
                 </PanelBody>
