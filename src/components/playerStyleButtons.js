@@ -15,7 +15,7 @@ const PlayerStyleButtons = ({ handlePlayerStyleChange }) => {
 
     return (
         <fieldset className="player-style-buttons">
-            <legend className='block-sidebar-legend'>Play Icon</legend>
+            <legend className='block-sidebar-legend'>Style</legend>
             {svgIcons.map((icon, index) => (
                 <button
                     key={index}

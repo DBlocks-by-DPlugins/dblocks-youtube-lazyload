@@ -8,7 +8,7 @@ import {
     SelectControl,
     PanelBody
 } from '@wordpress/components';
-import { BlockControls, InspectorControls, useBlockProps, HeightControl } from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { extractYoutubeId } from './components/youtubeHelpers';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
@@ -16,7 +16,7 @@ import PlayerStyleButtons from './components/PlayerStyleButtons';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const { url, quality, playButtonSize, minHeight, playButtonStyle } = attributes;
+    const { url, quality, playButtonSize, minHeight, playButtonStyle, color, textColor } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
 
@@ -39,20 +39,31 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({ playButtonSize: newSize });
     };
 
-    const handleMinHeightChange = (newMinHeight) => {
-        setAttributes({ minHeight: newMinHeight });
-    };
-
     const handlePlayerStyleChange = (style) => {
         const styleIndex = parseInt(style.replace('style', '')) - 1;
         setAttributes({ playButtonStyle: styleIndex });
+    };
+
+    const handleColorChange = (colorValue) => {
+        setAttributes({ color: colorValue });
+    };
+
+    const handleTextColorChange = (colorValue) => {
+        setAttributes({ textColor: colorValue });
     };
 
     const youtubeId = extractYoutubeId(url);
 
     const renderPreview = () => (
         <div className="youtube-preview">
-            <PlayContent url={url} quality={quality} playButtonSize={playButtonSize} playButtonStyle={playButtonStyle} />
+            <PlayContent
+                url={url}
+                quality={quality}
+                playButtonSize={playButtonSize}
+                playButtonStyle={playButtonStyle}
+                color={color}
+                textColor={textColor}
+            />
         </div>
     );
 
@@ -67,14 +78,32 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={handleQualityChange}
                     />
                 </PanelBody>
-                <PanelBody title="Player Style" initialOpen={true}>
+                <PanelColorSettings
+                        title="Color Settings"
+                        colorSettings={[
+                            {
+                                value: textColor,
+                                onChange: handleTextColorChange,
+                                label: 'Play Color',
+                            },
+                            {
+                                value: color,
+                                onChange: handleColorChange,
+                                label: 'Play Background Color',
+                            },                            
+                        ]}
+                />
+                <PanelBody title="Player Icon" initialOpen={true}>
                     <PlayerStyleButtons handlePlayerStyleChange={handlePlayerStyleChange} />
                     <HeightControl
-                        label="Play Button Size"
+                        label="Size"
                         value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
+
+                   
                 </PanelBody>
+
             </InspectorControls>
             <BlockControls>
                 <ToolbarGroup>
