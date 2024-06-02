@@ -28,9 +28,13 @@
             "default": "maxresdefault"
         },
         "playButtonSize": {
-			"type": "string",
-			"default": "100px"
-		}
+            "type": "string",
+            "default": "64px"
+        },
+        "playButtonStyle": {
+            "type": "number",
+            "default": 0
+        }
     },
     "textdomain": "dblocks-youtube-lazyload",
     "editorScript": "file:./index.js",

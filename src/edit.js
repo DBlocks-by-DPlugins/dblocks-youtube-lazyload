@@ -16,7 +16,7 @@ import PlayerStyleButtons from './components/PlayerStyleButtons';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const { url, quality, playButtonSize, minHeight } = attributes;
+    const { url, quality, playButtonSize, minHeight, playButtonStyle } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
 
@@ -39,18 +39,22 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({ playButtonSize: newSize });
     };
 
+    const handleMinHeightChange = (newMinHeight) => {
+        setAttributes({ minHeight: newMinHeight });
+    };
+
+    const handlePlayerStyleChange = (style) => {
+        const styleIndex = parseInt(style.replace('style', '')) - 1;
+        setAttributes({ playButtonStyle: styleIndex });
+    };
+
     const youtubeId = extractYoutubeId(url);
 
     const renderPreview = () => (
         <div className="youtube-preview">
-            <PlayContent url={url} quality={quality} playButtonSize={playButtonSize} />
+            <PlayContent url={url} quality={quality} playButtonSize={playButtonSize} playButtonStyle={playButtonStyle} />
         </div>
     );
-
-    const handlePlayerStyleChange = (style) => {
-        console.log(`Selected style: ${style}`);
-        // Implement the functionality to change player style here
-    };
 
     return (
         <>
@@ -63,16 +67,11 @@ const Edit = ({ attributes, setAttributes }) => {
                         onChange={handleQualityChange}
                     />
                 </PanelBody>
-                <PanelBody title="Global styles" initialOpen={true}>
+                <PanelBody title="Player Style" initialOpen={true}>
                     <PlayerStyleButtons handlePlayerStyleChange={handlePlayerStyleChange} />
                     <HeightControl
                         label="Play Button Size"
-                        value={playButtonSize || '100px'}
-                        onChange={handlePlayButtonSizeChange}
-                    />
-                    <HeightControl
-                        label="Play Button Size"
-                        value={playButtonSize || '100px'}
+                        value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
                 </PanelBody>
