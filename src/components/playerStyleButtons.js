@@ -3,7 +3,10 @@
 import React from 'react';
 import { svgIcons } from './svgIcons';
 
-const PlayerStyleButtons = ({ handlePlayerStyleChange, color, textColor }) => {
+const PlayerStyleButtons = ({ handlePlayerStyleChange }) => {
+    const color = '#3c3c3c';  // Black
+    const textColor = '#FFFFFF';  // White
+
     const ariaLabels = [
         'Original',
         'Rounded',
