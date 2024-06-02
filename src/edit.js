@@ -8,14 +8,15 @@ import {
     SelectControl,
     PanelBody
 } from '@wordpress/components';
-import { BlockControls, InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useBlockProps, HeightControl } from '@wordpress/block-editor';
 import { extractYoutubeId } from './components/youtubeHelpers';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
+import PlayerStyleButtons from './components/PlayerStyleButtons';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
-    const { url, quality } = attributes;
+    const { url, quality, playButtonSize, minHeight } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
 
@@ -34,23 +35,45 @@ const Edit = ({ attributes, setAttributes }) => {
         setAttributes({ quality: newQuality });
     };
 
+    const handlePlayButtonSizeChange = (newSize) => {
+        setAttributes({ playButtonSize: newSize });
+    };
+
     const youtubeId = extractYoutubeId(url);
 
     const renderPreview = () => (
         <div className="youtube-preview">
-            <PlayContent url={url} quality={quality} />
+            <PlayContent url={url} quality={quality} playButtonSize={playButtonSize} />
         </div>
     );
+
+    const handlePlayerStyleChange = (style) => {
+        console.log(`Selected style: ${style}`);
+        // Implement the functionality to change player style here
+    };
 
     return (
         <>
             <InspectorControls>
-                <PanelBody title="Settings" initialOpen={true}>
+                <PanelBody title="Thumbnail" initialOpen={true}>
                     <SelectControl
                         label="Image Quality"
                         value={quality || defaultQuality}
                         options={qualityOptions}
                         onChange={handleQualityChange}
+                    />
+                </PanelBody>
+                <PanelBody title="Global styles" initialOpen={true}>
+                    <PlayerStyleButtons handlePlayerStyleChange={handlePlayerStyleChange} />
+                    <HeightControl
+                        label="Play Button Size"
+                        value={playButtonSize || '100px'}
+                        onChange={handlePlayButtonSizeChange}
+                    />
+                    <HeightControl
+                        label="Play Button Size"
+                        value={playButtonSize || '100px'}
+                        onChange={handlePlayButtonSizeChange}
                     />
                 </PanelBody>
             </InspectorControls>
@@ -63,7 +86,7 @@ const Edit = ({ attributes, setAttributes }) => {
                     />
                 </ToolbarGroup>
             </BlockControls>
-            <div {...useBlockProps()}>
+            <div {...useBlockProps()} style={{ minHeight }}>
                 {isEditing ? (
                     <div className="lazy-load-edit-wrapper">
                         <div className="lazy-load__title">YouTube URL</div>

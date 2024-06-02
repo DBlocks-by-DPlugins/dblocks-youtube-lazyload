@@ -1,17 +1,19 @@
+// PlayContent.js
+
 import React from "react";
 import { extractYoutubeId, getPlaceholderImageUrl } from "./youtubeHelpers";
 
-const PlayContent = ({ url, quality = 'maxresdefault' }) => {
+const PlayContent = ({ url, quality = 'maxresdefault', playButtonSize }) => {
     const youtubeId = extractYoutubeId(url);
     const placeholderImageUrl = getPlaceholderImageUrl(youtubeId, quality);
 
     return (
         <>
-            <button className="play-button" data-youtube-id={youtubeId}>
-                <div className="play-icon-wrap">
+            <button className="play-button" data-youtube-id={youtubeId} style={{ width: playButtonSize, height: playButtonSize }}>
+                <div className="play-icon-wrap" style={{ width: playButtonSize, height: playButtonSize }}>
                     <svg
-                        width="90"
-                        height="90"
+                        width="100%"
+                        height="100%"
                         viewBox="0 0 90 90"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
