@@ -18,12 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin URLs and PATHs
-define( 'DBLOCKS_CODEPRO_DIR',	plugin_dir_path(__FILE__));
-define( 'DBLOCKS_CODEPRO_PATH',	plugin_dir_path(__FILE__));
-define( 'DBLOCKS_CODEPRO_URL',	plugin_dir_url(__FILE__));
-define( 'DBLOCKS_CODEPRO_BASE',	plugin_basename(__FILE__));
+define( 'DBLOCKS_YOUTUBE_LAZYLOAD_DIR',	plugin_dir_path(__FILE__));
+define( 'DBLOCKS_YOUTUBE_LAZYLOAD_PATH',	plugin_dir_path(__FILE__));
+define( 'DBLOCKS_YOUTUBE_LAZYLOAD_URL',	plugin_dir_url(__FILE__));
+define( 'DBLOCKS_YOUTUBE_LAZYLOAD_BASE',	plugin_basename(__FILE__));
 
 
 // Include the components using the prefixed path constant
-require_once DBLOCKS_CODEPRO_PATH . 'inc/block-registration.php';
-require_once DBLOCKS_CODEPRO_PATH . 'inc/category.php';
+require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/block-registration.php';
+require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/category.php';
