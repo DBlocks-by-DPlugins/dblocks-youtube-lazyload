@@ -1,4 +1,4 @@
-node_modules
+node_modules/
 
 .distignore
 .editorconfig
@@ -10,7 +10,6 @@ node_modules
 /**/**/.DS_Store
 
 dev.md
-TODO.MD
 package-lock.json
 package.json
 prepros.config

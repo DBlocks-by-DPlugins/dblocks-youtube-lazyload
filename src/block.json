@@ -29,11 +29,7 @@
         },
         "playButtonSize": {
             "type": "string",
-            "default": "100px"
-        },
-        "minHeight": {
-            "type": "string",
-            "default": "100px"
+            "default": "64px"
         },
         "playButtonStyle": {
             "type": "number",
