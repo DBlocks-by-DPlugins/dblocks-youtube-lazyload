@@ -68,7 +68,7 @@ registerStore(STORE_NAME, {
     },
     resolvers: {
         *getGlobalSettings() {
-            const response = yield fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
+            const response = yield fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings');
             const settings = yield response.json();
             return {
                 type: 'SET_GLOBAL_SETTINGS',
@@ -98,7 +98,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     useEffect(() => {
         const fetchGlobalSettings = async () => {
             try {
-                const response = await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings');
+                const response = await fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings');
                 const settings = await response.json();
                 setGlobalSettings(settings);
                 setAttributes((prevAttributes) => ({
@@ -139,7 +139,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         setAttributes({ [attribute]: value });
 
         try {
-            await fetch('/wp-json/dblocks-youtube-lazyload/v1/global-settings', {
+            await fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

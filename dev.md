@@ -1,5 +1,5 @@
-
 If you are using LocalWP open site shell and type
+
 ```bash
-wp dist-archive "wp-content/plugins/dblocks-youtube-lazyload/"
+wp dist-archive "wp-content/plugins/dblocks-lazyload-for-youtube/"
 ```

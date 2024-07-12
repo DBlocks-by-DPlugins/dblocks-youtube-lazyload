@@ -1,17 +1,17 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 // Theme API
 
 add_action('rest_api_init', function () {
-    register_rest_route('dblocks-youtube-lazyload/v1', '/global-settings', [
+    register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'GET',
         'callback' => 'get_global_settings',
         'permission_callback' => '__return_true',
     ]);
 
-    register_rest_route('dblocks-youtube-lazyload/v1', '/global-settings', [
+    register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'POST',
         'callback' => 'update_global_settings',
         'permission_callback' => function () {
@@ -20,7 +20,8 @@ add_action('rest_api_init', function () {
     ]);
 });
 
-function get_global_settings() {
+function get_global_settings()
+{
     return [
         'color' => get_option('dblocks_color', '#800080'),
         'textColor' => get_option('dblocks_textColor', '#FFFFFF'),
@@ -31,7 +32,8 @@ function get_global_settings() {
     ];
 }
 
-function update_global_settings(WP_REST_Request $request) {
+function update_global_settings(WP_REST_Request $request)
+{
     $params = $request->get_params();
 
     if (isset($params['color'])) {
