@@ -1,0 +1,15 @@
+node_modules
+src
+package-lock.json
+package.json
+.gitignore 
+.npmignore
+.git
+zip.js
+readme.md
+.distignore
+tailwind.config.js
+dev.md
+.editorconfig
+.DS_Store
+readme.txt

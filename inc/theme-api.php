@@ -7,20 +7,38 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 add_action('rest_api_init', function () {
     register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'GET',
-        'callback' => 'get_global_settings',
-        'permission_callback' => '__return_true',
+        'callback' => 'dblocks_youtube_get_global_settings',
+        'permission_callback' => function(WP_REST_Request $request) {
+            $nonce = $request->get_header('X-WP-Nonce');
+            if (empty($nonce) || !wp_verify_nonce($nonce, 'wp_rest') || !current_user_can('edit_posts')) {
+                return new WP_Error(
+                    'unauthorized', 
+                    'You must be logged in with proper permissions', 
+                    array('status' => 401)
+                );
+            }
+            return true;
+        },
     ]);
 
     register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'POST',
-        'callback' => 'update_global_settings',
-        'permission_callback' => function () {
-            return current_user_can('edit_posts');
+        'callback' => 'dblocks_youtube_update_global_settings',
+        'permission_callback' => function(WP_REST_Request $request) {
+            $nonce = $request->get_header('X-WP-Nonce');
+            if (empty($nonce) || !wp_verify_nonce($nonce, 'wp_rest') || !current_user_can('edit_posts')) {
+                return new WP_Error(
+                    'unauthorized', 
+                    'You must be logged in with proper permissions', 
+                    array('status' => 401)
+                );
+            }
+            return true;
         },
     ]);
 });
 
-function get_global_settings()
+function dblocks_youtube_get_global_settings()
 {
     return [
         'color' => get_option('dblocks_color', '#800080'),
@@ -32,7 +50,7 @@ function get_global_settings()
     ];
 }
 
-function update_global_settings(WP_REST_Request $request)
+function dblocks_youtube_update_global_settings(WP_REST_Request $request)
 {
     $params = $request->get_params();
 
@@ -55,5 +73,5 @@ function update_global_settings(WP_REST_Request $request)
         update_option('dblocks_minHeight', $params['minHeight']);
     }
 
-    return get_global_settings();
+    return dblocks_youtube_get_global_settings();
 }

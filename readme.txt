@@ -3,7 +3,7 @@ Contributors: dplugins, krstivoja
 Donate link: https://tareq.co/donate/
 Tags: block, youtube, lazy, load, gdpr, dblocks, dplugins
 Requires at least: 4.0
-Tested up to: 6.5.3
+Tested up to: 6.6.0
 Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
@@ -24,6 +24,17 @@ GDPR friendly lazyload youtube player that load content only if user click on th
 -   **Styles are global**: Apply then once see changes across entire website
 -   **Multiple Viewing Modes**: Includes 'Code', 'Preview', and 'Split View' modes, enabling you to code and preview content simultaneously or separately, optimizing your workflow.
 
+### Third-Party Services
+
+This plugin integrates with YouTube's services in the following ways:
+- Fetches video thumbnail images from YouTube servers when displaying video previews
+- Loads the YouTube video player and related scripts when a user clicks to play a video
+- Communicates with YouTube's servers to stream video content
+
+For more information about YouTube's services:
+- [YouTube Service Homepage](https://www.youtube.com)
+- [YouTube Terms of Service](https://www.youtube.com/t/terms)
+- [Google Privacy Policy](https://policies.google.com/privacy) (YouTube is owned by Google)
 
 ### Why Choose YouTube Lazyload
 
