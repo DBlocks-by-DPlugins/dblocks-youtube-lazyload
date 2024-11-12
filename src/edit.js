@@ -5,6 +5,7 @@ import {
     PanelBody,
     ToolbarGroup,
     ToolbarButton,
+    Button,
 } from '@wordpress/components';
 import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
@@ -68,7 +69,7 @@ registerStore(STORE_NAME, {
     },
     resolvers: {
         *getGlobalSettings() {
-            const response = yield fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings',{
+            const response = yield fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings', {
                 headers: {
                     'X-WP-Nonce': wpApiSettings.nonce,
                 },
@@ -95,17 +96,19 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
     const globalSettingsLoaded = useRef(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
 
+
     useEffect(() => {
         const fetchGlobalSettings = async () => {
             try {
-                const response = await fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings',{
+                const response = await fetch('/wp-json/dblocks-lazyload-for-youtube/v1/global-settings', {
                     headers: {
                         'X-WP-Nonce': wpApiSettings.nonce,
-                    },  
+                    },
                 });
                 const settings = await response.json();
                 setGlobalSettings(settings);
@@ -162,6 +165,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 
     const handleUrlChange = (newUrl) => {
         setAttributes({ url: newUrl });
+        setErrorMessage('');
     };
 
     const handleQualityChange = (newQuality) => {
@@ -199,6 +203,15 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             />
         </div>
     );
+
+    const handlePreviewClick = () => {
+        if (youtubeId) {
+            setIsEditing(false);
+            renderPreview();
+        } else {
+            setErrorMessage("Sorry, this content could not be embedded.");
+        }
+    };
 
     return (
         <>
@@ -241,11 +254,13 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             </InspectorControls>
             <BlockControls>
                 <ToolbarGroup>
-                    <ToolbarButton
-                        icon={isEditing ? 'edit' : 'visibility'}
-                        label={isEditing ? 'Edit URL' : 'View Image'}
-                        onClick={() => setIsEditing((current) => !current)}
-                    />
+                    {youtubeId && ( // Show button only if youtubeId is valid
+                        <ToolbarButton
+                            icon={isEditing ? 'edit' : 'visibility'}
+                            label={isEditing ? 'Edit URL' : 'View Image'}
+                            onClick={() => setIsEditing((current) => !current)}
+                        />
+                    )}
                 </ToolbarGroup>
             </BlockControls>
             <div
@@ -263,11 +278,25 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         <div className="lazy-load__title__instructions">
                             Paste a link to the content you want to display on your site.
                         </div>
-                        <TextControl
-                            value={url}
-                            onChange={handleUrlChange}
-                            placeholder="Enter YouTube URL"
-                        />
+                        <div className="lazy-load__title__input-wrapper">
+                            <TextControl
+                                value={url}
+                                onChange={handleUrlChange}
+                                placeholder="Enter YouTube URL"
+                            />
+                            <Button
+                                variant="primary"
+                                onClick={handlePreviewClick} // Use the new function
+                            >
+                                Preview
+                            </Button>
+
+                        </div>
+                        <a className="lazy-load__title__instructions text-link" href="https://github.com/DBlocks-by-DPlugins/dblocks-lazyload-for-youtube/blob/main/embeds.md" target="_blank">
+                            Learn more about embeds <span aria-label="(opens in a new tab)">↗</span>
+                        </a>
+
+                        {errorMessage && <p className="lazy-load__title__instructions">{errorMessage}</p>}
                     </div>
                 ) : youtubeId ? (
                     renderPreview()

@@ -6,3 +6,28 @@
 	@import "./styles/wrapper";
 	@import "./styles/edit-mode";
 }
+
+.lazy-load__title__input-wrapper {
+	display: flex;
+	gap: 16px;
+	width: 100%;
+	align-items: stretch;
+
+	.components-base-control {
+		flex-grow: 1;
+		display: flex;
+		margin: 0 !important;
+	}
+
+	.components-text-control__input {
+		min-height: 100%;
+	}
+
+	.components-base-control__field {
+		margin: 0 !important;
+	}
+}
+
+.lazy-load__title__instructions.text-link {
+	color: var(--wp-admin-theme-color);
+}
