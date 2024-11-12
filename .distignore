@@ -1,15 +1,13 @@
-node_modules/
+node_modules 
+src 
+.distignore 
+.editorconfig 
+.gitignore 
+.npmignore 
 
-.distignore
-.editorconfig
-.gitignore
-.git
+dev.md 
 
-.DS_Store
-/**/.DS_Store
-/**/**/.DS_Store
+package-lock.json 
+package.json 
 
-dev.md
-package-lock.json
-package.json
-prepros.config
+zip.js
