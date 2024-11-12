@@ -1,4 +1,4 @@
-=== DBlocks YouTube Lazyload ===
+=== DBlocks Lazyload for YouTube ===
 Contributors: dplugins, krstivoja
 Tags: block, youtube, lazy, load, gdpr, dblocks, dplugins
 Requires at least: 4.0

@@ -7,6 +7,9 @@ src/
 .npmignore 
 .git
 
+.DS_Store
+**/.DS_Store
+
 dev.md 
 zip.js
 

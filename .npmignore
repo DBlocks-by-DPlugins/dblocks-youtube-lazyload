@@ -7,8 +7,11 @@ src
 .git
 
 dev.md 
+zip.js
+
+.DS_Store
+**/.DS_Store
 
 package-lock.json 
 package.json 
 
-zip.js
