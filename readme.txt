@@ -1,6 +1,6 @@
 === DBlocks YouTube Lazyload ===
 Contributors: dplugins, krstivoja
-Donate link: https://tareq.co/donate/
+Donate link: #
 Tags: block, youtube, lazy, load, gdpr, dblocks, dplugins
 Requires at least: 4.0
 Tested up to: 6.6.0
