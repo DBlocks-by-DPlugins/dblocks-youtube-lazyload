@@ -41,6 +41,11 @@ For more information about YouTube's services:
 -   **Optimised page speed**: It will laod image instead of entire video and youtube scripts on page load
 -   **its Free**: There are other blocks like this but they are mostly payed
 
+### Embeds
+
+For more information about embeds:
+- [Embed guide](https://github.com/DBlocks-by-DPlugins/dblocks-lazyload-for-youtube/blob/main/embeds.md)
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/dblocks-lazyload-for-youtube` directory, or install the plugin through the WordPress plugins screen directly.

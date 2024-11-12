@@ -4,6 +4,7 @@ src
 .editorconfig 
 .gitignore 
 .npmignore 
+.git
 
 dev.md 
 
