@@ -1,6 +1,6 @@
 {
 	"name": "dblocks-lazyload-for-youtube",
-	"version": "1.1.0",
+	"version": "1.0.0",
 	"description": "Block that load YouTube video scripts only if user clicks on the play button",
 	"author": "DPlugins",
 	"license": "GPL-2.0-or-later",
