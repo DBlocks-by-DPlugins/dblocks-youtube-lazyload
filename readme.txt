@@ -3,7 +3,7 @@ Contributors: dplugins, krstivoja
 Tags: youtube, lazy, load, gdpr, dblocks
 Requires at least: 4.0
 Tested up to: 6.7.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,9 @@ For more information about embeds:
 
 
 == Changelog ==
+= 1.0.3 =
+* Assets update.
+
 = 1.0.2 =
 * Limited number of tags to 5
 
