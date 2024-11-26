@@ -11,7 +11,7 @@ import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelCo
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent';
 import { qualityOptions, defaultQuality } from './components/qualitySettings';
-import PlayerStyleButtons from './components/PlayerStyleButtons';
+import PlayerStyleButtons from './components/playerStyleButtons';
 import { extractYoutubeId } from './components/youtubeHelpers';
 import './editor.scss';
 
