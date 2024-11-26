@@ -9,10 +9,10 @@ import {
 } from '@wordpress/components';
 import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
-import PlayContent from './components/playContent';
-import { qualityOptions, defaultQuality } from './components/qualitySettings';
-import PlayerStyleButtons from './components/playerStyleButtons';
-import { extractYoutubeId } from './components/youtubeHelpers';
+import PlayContent from './components/playContent.js';
+import { qualityOptions, defaultQuality } from './components/qualitySettings.js';
+import PlayerStyleButtons from './components/playerStyleButtons.js';
+import { extractYoutubeId } from './components/youtubeHelpers.js';
 import './editor.scss';
 
 const STORE_NAME = 'dblocks/global-settings';
