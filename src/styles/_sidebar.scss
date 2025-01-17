@@ -1,22 +1,20 @@
 .player-style-buttons {
-	gap: 0px;
-	display: grid;
+    gap: 5px;
+    display: grid;
 	grid-template-columns: repeat(4, 1fr); /* 3 items per row */
-	margin-bottom: 16px;
 }
 
+
 .player-style-button {
-	background-color: white;
-	padding: 10px;
-	border: 1px solid #ddd;
+	margin-bottom: 8px;
+	padding: 5px;
+	border: 1px solid lightblue;
 	background-color: transparent;
 	display: flex;
 	justify-content: center;
 	aspect-ratio: 1/1;
 	width: 100%;
 	height: auto;
-	position: relative;
-	left: -1px;
 
 	div {
 		width: 100%;
@@ -25,16 +23,18 @@
 
 	svg {
 		width: 100%;
-		height: auto;
+    	height: auto;
 	}
 }
 
-.block-sidebar-legend {
+
+
+.block-sidebar-legend{
 	font-size: 11px;
-	font-weight: 500;
-	line-height: 1.4;
-	text-transform: uppercase;
-	display: inline-block;
-	margin-bottom: calc(8px);
-	padding: 0px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: calc(8px);
+    padding: 0px;
 }
