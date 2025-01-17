@@ -6,7 +6,6 @@ import {
     ToolbarGroup,
     ToolbarButton,
     Button,
-    DropZone,
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
@@ -107,7 +106,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
 
-    const [hasDropped, setHasDropped] = useState(false);
 
     useEffect(() => {
         const fetchGlobalSettings = async () => {
@@ -270,21 +268,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         />
                     )}
                     {playerIcon === 'custom' && (
-                        <div
-                            style={{
-                                background: '#ededed',
-                                padding: 32,
-                                marginBottom: 16,
-                                textAlign: 'center',
-                                position: 'relative'
-                            }}>
-                            {hasDropped ? 'Dropped!' : 'Drop SVG file here'}
-                            <DropZone
-                                onFilesDrop={() => setHasDropped(true)}
-                                onHTMLDrop={() => setHasDropped(true)}
-                                onDrop={() => setHasDropped(true)}
-                            />
-                        </div>
+                        <p>Custom</p>
                     )}
                     <HeightControl
                         label="Size"
