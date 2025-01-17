@@ -96,6 +96,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         color,
         textColor,
         iconType,
+        customSvgIconContent,
     } = attributes;
 
     let { containerId } = attributes;
@@ -103,7 +104,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const globalSettingsLoaded = useRef(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [hasDropped, setHasDropped] = useState(false);
-    const [svgContent, setSvgContent] = useState('');
+    const [svgContent, setSvgContent] = useState(customSvgIconContent);
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
@@ -200,6 +201,10 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         saveGlobalSetting('iconType', iconType);
     };
 
+    const handleCustomSvgIconContentChange = (newSvgContent) => {
+        setAttributes({ customSvgIconContent: newSvgContent });
+    };
+
     const youtubeId = extractYoutubeId(url);
 
     const handlePreviewClick = () => {
@@ -215,9 +220,17 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         const file = files[0];
         if (file && file.type === 'image/svg+xml') {
             const reader = new FileReader();
-            reader.onload = (event) => {
-                setSvgContent(event.target.result);
+            reader.onload = async (event) => {
+                const svgContent = event.target.result;
+                setSvgContent(svgContent);
                 setHasDropped(true);
+
+                try {
+                    await saveGlobalSetting('customSvgIconContent', svgContent);
+                    console.log('SVG content saved to global settings');
+                } catch (error) {
+                    console.error('Error saving SVG content to global settings:', error);
+                }
             };
             reader.readAsText(file);
         }
@@ -273,6 +286,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                                 onFilesDrop={handleDrop}
                                 onHTMLDrop={() => setHasDropped(true)}
                                 onDrop={() => setHasDropped(true)}
+
                             />
                         </div>
                     )}
