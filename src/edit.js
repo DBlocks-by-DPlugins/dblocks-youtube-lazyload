@@ -102,6 +102,8 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const [isEditing, setIsEditing] = useState(!url);
     const globalSettingsLoaded = useRef(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [hasDropped, setHasDropped] = useState(false);
+    const [svgContent, setSvgContent] = useState('');
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
@@ -209,7 +211,26 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         }
     };
 
-    const [hasDropped, setHasDropped] = useState(false);
+    const handleDrop = (files) => {
+        const file = files[0];
+        if (file && file.type === 'image/svg+xml') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setSvgContent(event.target.result);
+                setHasDropped(true);
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    const handleRemoveIcon = () => {
+        setAttributes({
+            iconType: '',
+            playButtonStyle: 0,
+            svgContent: '',
+            hasDropped: false,
+        });
+    };
 
     return (
         <>
@@ -245,14 +266,26 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         />
                     )}
 
-                    {iconType === 'custom' && (
+                    {iconType === 'custom' && !svgContent && !hasDropped && (
                         <div className="drop-zone-wrapper">
                             {hasDropped ? 'Dropped!' : 'Drop something here'}
                             <DropZone
-                                onFilesDrop={() => setHasDropped(true)}
+                                onFilesDrop={handleDrop}
                                 onHTMLDrop={() => setHasDropped(true)}
                                 onDrop={() => setHasDropped(true)}
                             />
+                        </div>
+                    )}
+
+                    {hasDropped && svgContent && (
+                        <div className="svg-preview-wrapper">
+                            <div className="svg-preview drop-zone-wrapper" dangerouslySetInnerHTML={{ __html: svgContent }} />
+                            <Button
+                                variant="secondary"
+                                onClick={handleRemoveIcon}
+                            >
+                                Remove Icon
+                            </Button>
                         </div>
                     )}
 
