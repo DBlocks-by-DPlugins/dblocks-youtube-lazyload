@@ -2,18 +2,20 @@
 	margin-bottom: 16px;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
 }
 
 .player-style-button {
-	padding: 8px;
+	padding: 8px 16px;
 	margin-left: -1px;
 	border: 1px solid #ddd;
 	background-color: transparent;
 	display: flex;
 	justify-content: center;
-	aspect-ratio: 1/1;
+	// aspect-ratio: 1/1;
 	width: 100%;
 	height: auto;
+	border-radius: 4px;
 
 	div {
 		width: 100%;
@@ -23,6 +25,13 @@
 	svg {
 		width: 100%;
 		height: auto;
+	}
+
+	&.active {
+		background-color: #3c3c3c;
+		svg {
+			filter: invert(1) contrast(10);
+		}
 	}
 }
 

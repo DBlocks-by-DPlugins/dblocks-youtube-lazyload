@@ -27,7 +27,7 @@ const PlayButtonPresets = ({ handlePlayerStyleChange, initialStyleIndex }) => {
             <legend className='block-sidebar-legend'>Style</legend>
             {svgIcons.map((icon, index) => {
                 const svgIcon = icon.replace(/{{playBackground}}/g, color).replace(/{{playIcon}}/g, textColor);
-                const isActive = index === activeIndex; // Check if the button is active
+                const isActive = index == activeIndex; // Check if the button is active
                 return (
                     <button
                         key={index}
