@@ -6,7 +6,11 @@ import {
     ToolbarGroup,
     ToolbarButton,
     Button,
+    __experimentalToggleGroupControl as ToggleGroupControl,
+    __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
+
+
 import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent.js';
@@ -92,6 +96,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         playButtonStyle,
         color,
         textColor,
+        playerIcon = 'defaulticons',
     } = attributes;
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
@@ -189,6 +194,10 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         saveGlobalSetting('textColor', colorValue);
     };
 
+    const handlePlayerIconChange = (newIcon) => {
+        setAttributes({ playerIcon: newIcon });
+    };
+
     const youtubeId = extractYoutubeId(url);
 
     const renderPreview = () => (
@@ -240,11 +249,27 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                     ]}
                 />
                 <PanelBody title="Player Icon" initialOpen={true}>
-                    <PlayerStyleButtons
-                        handlePlayerStyleChange={handlePlayerStyleChange}
-                        color={color}
-                        textColor={textColor}
-                    />
+                    <ToggleGroupControl
+                        label="Player Icon"
+                        value={playerIcon}
+                        onChange={handlePlayerIconChange}
+                        isBlock
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
+                    >
+                        <ToggleGroupControlOption value="defaulticons" label="Presets" />
+                        <ToggleGroupControlOption value="custom" label="Custom" />
+                    </ToggleGroupControl>
+                    {playerIcon === 'defaulticons' && (
+                        <PlayerStyleButtons
+                            handlePlayerStyleChange={handlePlayerStyleChange}
+                            color={color}
+                            textColor={textColor}
+                        />
+                    )}
+                    {playerIcon === 'custom' && (
+                        <p>Custom</p>
+                    )}
                     <HeightControl
                         label="Size"
                         value={playButtonSize || '64px'}
