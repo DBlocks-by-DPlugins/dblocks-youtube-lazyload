@@ -41,12 +41,20 @@
 	line-height: 1.4;
 	text-transform: uppercase;
 	display: inline-block;
-	margin-bottom: calc(8px);
+	margin: calc(8px);
 	padding: 0px;
 }
 
 .color-settings-youtubelazyload {
 	border: none !important;
 	padding: 0px !important;
-	margin: 16px 0px !important;
+	margin: 32px 0px !important;
+}
+
+.drop-zone-wrapper {
+	background: #ddd;
+	padding: 32px;
+	position: relative;
+	text-align: center;
+	margin-bottom: 24px;
 }
