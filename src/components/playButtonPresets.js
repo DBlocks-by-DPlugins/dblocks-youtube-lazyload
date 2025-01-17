@@ -3,7 +3,7 @@
 import React from 'react';
 import { svgIcons } from './svgIcons';
 
-const PlayerStyleButtons = ({ handlePlayerStyleChange }) => {
+const PlayButtonPresets = ({ handlePlayerStyleChange }) => {
     const color = '#3c3c3c';  // Black
     const textColor = '#FFFFFF';  // White
 
@@ -35,4 +35,4 @@ const PlayerStyleButtons = ({ handlePlayerStyleChange }) => {
     );
 };
 
-export default PlayerStyleButtons;
+export default PlayButtonPresets;

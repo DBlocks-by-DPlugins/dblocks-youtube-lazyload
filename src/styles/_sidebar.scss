@@ -1,14 +1,12 @@
 .player-style-buttons {
-    gap: 5px;
-    display: grid;
-	grid-template-columns: repeat(4, 1fr); /* 3 items per row */
+	margin-bottom: 16px;
+	display: flex;
 }
 
-
 .player-style-button {
-	margin-bottom: 8px;
-	padding: 5px;
-	border: 1px solid lightblue;
+	padding: 8px;
+	margin-left: -1px;
+	border: 1px solid #ddd;
 	background-color: transparent;
 	display: flex;
 	justify-content: center;
@@ -23,18 +21,16 @@
 
 	svg {
 		width: 100%;
-    	height: auto;
+		height: auto;
 	}
 }
 
-
-
-.block-sidebar-legend{
+.block-sidebar-legend {
 	font-size: 11px;
-    font-weight: 500;
-    line-height: 1.4;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: calc(8px);
-    padding: 0px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-transform: uppercase;
+	display: inline-block;
+	margin-bottom: calc(8px);
+	padding: 0px;
 }

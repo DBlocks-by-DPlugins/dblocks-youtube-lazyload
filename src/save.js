@@ -1,6 +1,6 @@
 // save.js
 
-import { extractYoutubeId } from "./components/youtubeHelpers";
+import { extractYoutubeId } from "./utils/youtubeHelpers";
 import PlayContent from "./components/playContent";
 
 const Save = ({ attributes }) => {
@@ -8,14 +8,13 @@ const Save = ({ attributes }) => {
     const youtubeId = extractYoutubeId(url);
 
     // Construct the class name based on the alignment
-    const className = `dblocks-dblocks-lazyload-for-youtube ${
-        align ? "align" + align : ""
-    }`;
+    const className = `dblocks-dblocks-lazyload-for-youtube ${align ? "align" + align : ""
+        }`;
 
     return (
-        <div 
-            id={containerId} 
-            className={className} 
+        <div
+            id={containerId}
+            className={className}
             style={{ '--play-background': color || '#800080', '--play-icon-color': textColor || '#FFFFFF', '--play-button-size': playButtonSize || '64px' }}
         >
             {youtubeId && (

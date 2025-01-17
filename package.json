@@ -9,6 +9,7 @@
 		"develop": "npm-run-all --parallel start sync",
 		"build": "wp-scripts build",
 		"start": "wp-scripts start",
+		"hot": "wp-scripts start --hot",
 		"sync": "browser-sync start --proxy 'dblocks.local' --files 'build/*'",
 		"packages-update": "wp-scripts packages-update"
 	},

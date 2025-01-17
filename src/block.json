@@ -42,6 +42,10 @@
         "textColor": {
             "type": "string",
             "default": "#FFFFFF"
+        },
+        "iconType": {
+            "type": "string",
+            "default": "iconPresets"
         }
     },
     "textdomain": "dblocks-lazyload-for-youtube",

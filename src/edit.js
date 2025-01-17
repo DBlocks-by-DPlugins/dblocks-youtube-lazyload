@@ -3,17 +3,19 @@ import {
     TextControl,
     SelectControl,
     PanelBody,
-    ToolbarGroup,
-    ToolbarButton,
     Button,
+    __experimentalToggleGroupControl as ToggleGroupControl,
+    __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
 import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent.js';
-import { qualityOptions, defaultQuality } from './components/qualitySettings.js';
-import PlayerStyleButtons from './components/playerStyleButtons.js';
-import { extractYoutubeId } from './components/youtubeHelpers.js';
+import { qualityOptions, defaultQuality } from './utils/qualitySettings.js';
+import PlayerStyleButtons from './components/playButtonPresets.js';
+import { extractYoutubeId } from './utils/youtubeHelpers.js';
+import { renderPreview } from './components/renderPreview.js';
 import './editor.scss';
+import BlockControlsComponent from './controls/BlockControls.js';
 
 const STORE_NAME = 'dblocks/global-settings';
 
@@ -92,7 +94,9 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         playButtonStyle,
         color,
         textColor,
+        iconType,
     } = attributes;
+
     let { containerId } = attributes;
     const [isEditing, setIsEditing] = useState(!url);
     const globalSettingsLoaded = useRef(false);
@@ -189,25 +193,16 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         saveGlobalSetting('textColor', colorValue);
     };
 
-    const youtubeId = extractYoutubeId(url);
+    const handleIconTypeChange = (iconType) => {
+        saveGlobalSetting('iconType', iconType);
+    };
 
-    const renderPreview = () => (
-        <div className="youtube-preview">
-            <PlayContent
-                url={url}
-                quality={quality}
-                playButtonSize={playButtonSize}
-                playButtonStyle={playButtonStyle}
-                color={color}
-                textColor={textColor}
-            />
-        </div>
-    );
+    const youtubeId = extractYoutubeId(url);
 
     const handlePreviewClick = () => {
         if (youtubeId) {
             setIsEditing(false);
-            renderPreview();
+            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor });
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
@@ -240,6 +235,17 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                     ]}
                 />
                 <PanelBody title="Player Icon" initialOpen={true}>
+                    <ToggleGroupControl
+                        label="my label"
+                        value={iconType}
+                        onChange={handleIconTypeChange}
+                        isBlock
+                        __nextHasNoMarginBottom
+                        __next40pxDefaultSize
+                    >
+                        <ToggleGroupControlOption value="iconPresets" label="Icon Presets" />
+                        <ToggleGroupControlOption value="custom" label="Custom SVG" />
+                    </ToggleGroupControl>
                     <PlayerStyleButtons
                         handlePlayerStyleChange={handlePlayerStyleChange}
                         color={color}
@@ -253,15 +259,11 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                 </PanelBody>
             </InspectorControls>
             <BlockControls>
-                <ToolbarGroup>
-                    {youtubeId && ( // Show button only if youtubeId is valid
-                        <ToolbarButton
-                            icon={isEditing ? 'edit' : 'visibility'}
-                            label={isEditing ? 'Edit URL' : 'View Image'}
-                            onClick={() => setIsEditing((current) => !current)}
-                        />
-                    )}
-                </ToolbarGroup>
+                <BlockControlsComponent
+                    youtubeId={youtubeId}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                />
             </BlockControls>
             <div
                 {...useBlockProps()}
@@ -299,7 +301,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         {errorMessage && <p className="lazy-load__title__instructions">{errorMessage}</p>}
                     </div>
                 ) : youtubeId ? (
-                    renderPreview()
+                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor })
                 ) : null}
             </div>
         </>
