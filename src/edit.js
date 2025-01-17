@@ -4,6 +4,7 @@ import {
     SelectControl,
     PanelBody,
     Button,
+    DropZone,
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
@@ -208,6 +209,8 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         }
     };
 
+    const [hasDropped, setHasDropped] = useState(false);
+
     return (
         <>
             <InspectorControls>
@@ -233,34 +236,60 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         <ToggleGroupControlOption value="custom" label="Custom SVG" />
                     </ToggleGroupControl>
 
+                    {iconType === 'iconPresets' && (
+                        <PlayerStyleButtons
+                            handlePlayerStyleChange={handlePlayerStyleChange}
+                            initialStyleIndex={globalSettings.playButtonStyle}
+                            color={color}
+                            textColor={textColor}
+                        />
+                    )}
+
+                    {iconType === 'custom' && (
+                        <div className="drop-zone-wrapper">
+                            {hasDropped ? 'Dropped!' : 'Drop something here'}
+                            <DropZone
+                                onFilesDrop={() => setHasDropped(true)}
+                                onHTMLDrop={() => setHasDropped(true)}
+                                onDrop={() => setHasDropped(true)}
+                            />
+                        </div>
+                    )}
 
 
-                    <PlayerStyleButtons
-                        handlePlayerStyleChange={handlePlayerStyleChange}
-                        initialStyleIndex={globalSettings.playButtonStyle}
-                        color={color}
-                        textColor={textColor}
-                    />
+
+                    <div>
+                        {hasDropped ? 'Dropped!' : 'Drop something here'}
+                        <DropZone
+                            onFilesDrop={() => setHasDropped(true)}
+                            onHTMLDrop={() => setHasDropped(true)}
+                            onDrop={() => setHasDropped(true)}
+                        />
+                    </div>
+
                     <HeightControl
                         label="Size"
                         value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
-                    <PanelColorSettings
-                        title="Color Settings"
-                        colorSettings={[
-                            {
-                                value: textColor,
-                                onChange: handleTextColorChange,
-                                label: 'Play Color',
-                            },
-                            {
-                                value: color,
-                                onChange: handleColorChange,
-                                label: 'Play Background Color',
-                            },
-                        ]}
-                    />
+
+                    {iconType === 'iconPresets' && (
+                        <PanelColorSettings
+                            title="Color Settings"
+                            colorSettings={[
+                                {
+                                    value: textColor,
+                                    onChange: handleTextColorChange,
+                                    label: 'Play Color',
+                                },
+                                {
+                                    value: color,
+                                    onChange: handleColorChange,
+                                    label: 'Play Background Color',
+                                },
+                            ]}
+                        />
+                    )}
                 </PanelBody>
 
             </InspectorControls>
