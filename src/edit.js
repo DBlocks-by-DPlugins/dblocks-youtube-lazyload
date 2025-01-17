@@ -103,6 +103,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const [isEditing, setIsEditing] = useState(!url);
     const globalSettingsLoaded = useRef(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [svgContent, setSvgContent] = useState(null);
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
@@ -211,6 +212,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                 playButtonStyle={playButtonStyle}
                 color={color}
                 textColor={textColor}
+                customSvgContent={svgContent}
             />
         </div>
     );
@@ -221,6 +223,17 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             renderPreview();
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
+        }
+    };
+
+    const handleSvgDrop = (files) => {
+        const file = files[0];
+        if (file && file.type === 'image/svg+xml') {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setSvgContent(event.target.result);
+            };
+            reader.readAsText(file);
         }
     };
 
@@ -280,10 +293,16 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                             }}>
                             {hasDropped ? 'Dropped!' : 'Drop SVG file here'}
                             <DropZone
-                                onFilesDrop={() => setHasDropped(true)}
+                                onFilesDrop={handleSvgDrop}
                                 onHTMLDrop={() => setHasDropped(true)}
                                 onDrop={() => setHasDropped(true)}
                             />
+                            {svgContent && (
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: svgContent }}
+                                    style={{ width: playButtonSize, height: playButtonSize }}
+                                />
+                            )}
                         </div>
                     )}
                     <HeightControl
