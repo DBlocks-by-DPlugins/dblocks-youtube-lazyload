@@ -1,18 +1,22 @@
 {
 	"name": "dblocks-lazyload-for-youtube",
-	"version": "1.1.0",
+	"version": "1.0.3",
 	"description": "Block that load YouTube video scripts only if user clicks on the play button",
 	"author": "DPlugins",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
+		"develop": "npm-run-all --parallel start sync",
 		"build": "wp-scripts build",
 		"start": "wp-scripts start",
 		"hot": "wp-scripts start --hot",
+		"sync": "browser-sync start --proxy 'dblocks.local' --files 'build/*'",
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^27.9.0",
+		"browser-sync": "^3.0.2",
+		"npm-run-all": "^4.1.5",
 		"ignore": "^6.0.2"
 	}
 }

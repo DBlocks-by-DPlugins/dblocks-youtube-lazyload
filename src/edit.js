@@ -6,8 +6,6 @@ import {
     Button,
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
-    DropZone,
-
 } from '@wordpress/components';
 import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
@@ -97,7 +95,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         color,
         textColor,
         iconType,
-        customSvgIcon,
     } = attributes;
 
     let { containerId } = attributes;
@@ -107,7 +104,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
-
 
 
     useEffect(() => {
@@ -143,7 +139,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             playButtonSize: globalSettings.playButtonSize,
             playButtonStyle: globalSettings.playButtonStyle,
             minHeight: globalSettings.minHeight,
-            customSvgIcon: globalSettings.customSvgIcon,
         });
     }, [globalSettings, setAttributes]);
 
@@ -202,10 +197,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         saveGlobalSetting('iconType', iconType);
     };
 
-    const handleCustomSvgIconChange = (icon) => {
-        saveGlobalSetting('customSvgIcon', icon);
-    };
-
     const youtubeId = extractYoutubeId(url);
 
     const handlePreviewClick = () => {
@@ -216,8 +207,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
     };
-
-    const [hasDropped, setHasDropped] = useState(false);
 
     return (
         <>
@@ -244,50 +233,34 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         <ToggleGroupControlOption value="custom" label="Custom SVG" />
                     </ToggleGroupControl>
 
-                    {iconType === 'iconPresets' && (
-                        <PlayerStyleButtons
-                            handlePlayerStyleChange={handlePlayerStyleChange}
-                            initialStyleIndex={globalSettings.playButtonStyle}
-                            color={color}
-                            textColor={textColor}
-                        />
-                    )}
 
-                    {iconType === 'custom' && (
-                        <div className="drop-zone-wrapper">
-                            {hasDropped ? 'Dropped!' : 'Drop something here'}
-                            <DropZone
-                                onFilesDrop={() => setHasDropped(true)}
-                                onHTMLDrop={() => setHasDropped(true)}
-                                onDrop={() => setHasDropped(true)}
-                                onDropAccepted={handleCustomSvgIconChange}
-                            />
-                        </div>
-                    )}
 
+                    <PlayerStyleButtons
+                        handlePlayerStyleChange={handlePlayerStyleChange}
+                        initialStyleIndex={globalSettings.playButtonStyle}
+                        color={color}
+                        textColor={textColor}
+                    />
                     <HeightControl
                         label="Size"
                         value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
-
-                    {iconType === 'iconPresets' && (
-                        <PanelColorSettings
-                            title="Color Settings"
-                            colorSettings={[
-                                {
-                                    value: textColor,
-                                    onChange: handleTextColorChange,
-                                    label: 'Play Color',
-                                },
-                                {
-                                    value: color,
-                                    onChange: handleColorChange,
-                                    label: 'Play Background Color',
-                                },
-                            ]}
-                        />
-                    )}
+                    <PanelColorSettings
+                        title="Color Settings"
+                        colorSettings={[
+                            {
+                                value: textColor,
+                                onChange: handleTextColorChange,
+                                label: 'Play Color',
+                            },
+                            {
+                                value: color,
+                                onChange: handleColorChange,
+                                label: 'Play Background Color',
+                            },
+                        ]}
+                    />
                 </PanelBody>
 
             </InspectorControls>
