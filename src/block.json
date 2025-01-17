@@ -46,10 +46,6 @@
         "iconType": {
             "type": "string",
             "default": "iconPresets"
-        },
-        "customSvgIconContent": {
-            "type": "string",
-            "default": ""
         }
     },
     "textdomain": "dblocks-lazyload-for-youtube",

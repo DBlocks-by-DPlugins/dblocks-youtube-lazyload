@@ -8,12 +8,12 @@ add_action('rest_api_init', function () {
     register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'GET',
         'callback' => 'dblocks_youtube_get_global_settings',
-        'permission_callback' => function (WP_REST_Request $request) {
+        'permission_callback' => function(WP_REST_Request $request) {
             $nonce = $request->get_header('X-WP-Nonce');
             if (empty($nonce) || !wp_verify_nonce($nonce, 'wp_rest') || !current_user_can('edit_posts')) {
                 return new WP_Error(
-                    'unauthorized',
-                    'You must be logged in with proper permissions',
+                    'unauthorized', 
+                    'You must be logged in with proper permissions', 
                     array('status' => 401)
                 );
             }
@@ -24,28 +24,12 @@ add_action('rest_api_init', function () {
     register_rest_route('dblocks-lazyload-for-youtube/v1', '/global-settings', [
         'methods' => 'POST',
         'callback' => 'dblocks_youtube_update_global_settings',
-        'permission_callback' => function (WP_REST_Request $request) {
+        'permission_callback' => function(WP_REST_Request $request) {
             $nonce = $request->get_header('X-WP-Nonce');
             if (empty($nonce) || !wp_verify_nonce($nonce, 'wp_rest') || !current_user_can('edit_posts')) {
                 return new WP_Error(
-                    'unauthorized',
-                    'You must be logged in with proper permissions',
-                    array('status' => 401)
-                );
-            }
-            return true;
-        },
-    ]);
-
-    register_rest_route('dblocks-lazyload-for-youtube/v1', '/upload-svg', [
-        'methods' => 'POST',
-        'callback' => 'dblocks_youtube_upload_svg',
-        'permission_callback' => function (WP_REST_Request $request) {
-            $nonce = $request->get_header('X-WP-Nonce');
-            if (empty($nonce) || !wp_verify_nonce($nonce, 'wp_rest') || !current_user_can('edit_posts')) {
-                return new WP_Error(
-                    'unauthorized',
-                    'You must be logged in with proper permissions',
+                    'unauthorized', 
+                    'You must be logged in with proper permissions', 
                     array('status' => 401)
                 );
             }
@@ -63,7 +47,6 @@ function dblocks_youtube_get_global_settings()
         'playButtonSize' => get_option('dblocks_playButtonSize', '100px'),
         'playButtonStyle' => get_option('dblocks_playButtonStyle', 0),
         'minHeight' => get_option('dblocks_minHeight', '100px'),
-
     ];
 }
 
@@ -91,15 +74,4 @@ function dblocks_youtube_update_global_settings(WP_REST_Request $request)
     }
 
     return dblocks_youtube_get_global_settings();
-}
-
-function dblocks_youtube_upload_svg(WP_REST_Request $request)
-{
-    $params = $request->get_json_params();
-    $svgContent = $params['svgContent'];
-
-    // Here you would save the SVG content to the database
-    // For example, using update_option or a custom table
-
-    return new WP_REST_Response('SVG content saved successfully', 200);
 }
