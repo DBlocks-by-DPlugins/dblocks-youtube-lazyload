@@ -256,17 +256,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         </div>
                     )}
 
-
-
-                    <div>
-                        {hasDropped ? 'Dropped!' : 'Drop something here'}
-                        <DropZone
-                            onFilesDrop={() => setHasDropped(true)}
-                            onHTMLDrop={() => setHasDropped(true)}
-                            onDrop={() => setHasDropped(true)}
-                        />
-                    </div>
-
                     <HeightControl
                         label="Size"
                         value={playButtonSize || '64px'}
@@ -275,6 +264,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 
                     {iconType === 'iconPresets' && (
                         <PanelColorSettings
+                            className="color-settings-youtubelazyload"
                             title="Color Settings"
                             colorSettings={[
                                 {
