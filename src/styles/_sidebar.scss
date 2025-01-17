@@ -1,6 +1,7 @@
 .player-style-buttons {
 	margin-bottom: 16px;
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 }
 
 .player-style-button {

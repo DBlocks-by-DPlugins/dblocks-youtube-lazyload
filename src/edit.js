@@ -219,24 +219,10 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         onChange={handleQualityChange}
                     />
                 </PanelBody>
-                <PanelColorSettings
-                    title="Color Settings"
-                    colorSettings={[
-                        {
-                            value: textColor,
-                            onChange: handleTextColorChange,
-                            label: 'Play Color',
-                        },
-                        {
-                            value: color,
-                            onChange: handleColorChange,
-                            label: 'Play Background Color',
-                        },
-                    ]}
-                />
+
                 <PanelBody title="Player Icon" initialOpen={true}>
                     <ToggleGroupControl
-                        label="my label"
+                        label="Icon Type"
                         value={iconType}
                         onChange={handleIconTypeChange}
                         isBlock
@@ -246,8 +232,12 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         <ToggleGroupControlOption value="iconPresets" label="Icon Presets" />
                         <ToggleGroupControlOption value="custom" label="Custom SVG" />
                     </ToggleGroupControl>
+
+
+
                     <PlayerStyleButtons
                         handlePlayerStyleChange={handlePlayerStyleChange}
+                        initialStyleIndex={globalSettings.playButtonStyle}
                         color={color}
                         textColor={textColor}
                     />
@@ -256,7 +246,23 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         value={playButtonSize || '64px'}
                         onChange={handlePlayButtonSizeChange}
                     />
+                    <PanelColorSettings
+                        title="Color Settings"
+                        colorSettings={[
+                            {
+                                value: textColor,
+                                onChange: handleTextColorChange,
+                                label: 'Play Color',
+                            },
+                            {
+                                value: color,
+                                onChange: handleColorChange,
+                                label: 'Play Background Color',
+                            },
+                        ]}
+                    />
                 </PanelBody>
+
             </InspectorControls>
             <BlockControls>
                 <BlockControlsComponent
