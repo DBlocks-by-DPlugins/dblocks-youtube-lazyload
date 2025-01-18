@@ -235,10 +235,8 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         setSvgContent('');
         setHasDropped(false);
         setAttributes({
-            iconType: '',
             playButtonStyle: 0,
             svgContent: '',
-            hasDropped: false,
         });
         saveGlobalSetting('svgContent', '');
     };
