@@ -1,6 +1,6 @@
 import PlayContent from './playContent.js';
 
-export const renderPreview = ({ url, quality, playButtonSize, playButtonStyle, color, textColor }) => (
+export const renderPreview = ({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent }) => (
     <div className="youtube-preview">
         <PlayContent
             url={url}
@@ -9,6 +9,7 @@ export const renderPreview = ({ url, quality, playButtonSize, playButtonStyle, c
             playButtonStyle={playButtonStyle}
             color={color}
             textColor={textColor}
+            svgContent={svgContent}
         />
     </div>
 );

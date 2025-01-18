@@ -123,6 +123,10 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                     ...prevAttributes,
                     ...settings,
                 }));
+                if (settings.svgContent) {
+                    setSvgContent(settings.svgContent)
+                    setHasDropped(true);
+                }
                 globalSettingsLoaded.current = true;
             } catch (error) {
                 console.error('Failed to fetch global settings:', error);
@@ -205,7 +209,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const handlePreviewClick = () => {
         if (youtubeId) {
             setIsEditing(false);
-            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor });
+            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent });
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
@@ -215,21 +219,26 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         const file = files[0];
         if (file && file.type === 'image/svg+xml') {
             const reader = new FileReader();
-            reader.onload = (event) => {
-                setSvgContent(event.target.result);
+            reader.onload = async (event) => {
+                const svg = event.target.result;
+                setSvgContent(svg);
                 setHasDropped(true);
+                await saveGlobalSetting('svgContent', svg); // Save SVG to the backend
             };
             reader.readAsText(file);
         }
     };
 
     const handleRemoveIcon = () => {
+        setSvgContent('');
+        setHasDropped(false);
         setAttributes({
             iconType: '',
             playButtonStyle: 0,
             svgContent: '',
             hasDropped: false,
         });
+        saveGlobalSetting('svgContent', '');
     };
 
     return (
@@ -359,7 +368,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         {errorMessage && <p className="lazy-load__title__instructions">{errorMessage}</p>}
                     </div>
                 ) : youtubeId ? (
-                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor })
+                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent })
                 ) : null}
             </div>
         </>

@@ -47,6 +47,7 @@ function dblocks_youtube_get_global_settings()
         'playButtonSize' => get_option('dblocks_playButtonSize', '100px'),
         'playButtonStyle' => get_option('dblocks_playButtonStyle', 0),
         'minHeight' => get_option('dblocks_minHeight', '100px'),
+        'svgContent' => get_option('dblocks_svgContent', ''), // Retrieve SVG content
     ];
 }
 
@@ -71,6 +72,9 @@ function dblocks_youtube_update_global_settings(WP_REST_Request $request)
     }
     if (isset($params['minHeight'])) {
         update_option('dblocks_minHeight', $params['minHeight']);
+    }
+    if (isset($params['svgContent'])) {
+        update_option('dblocks_svgContent', $params['svgContent']); // Sanitize SVG content
     }
 
     return dblocks_youtube_get_global_settings();
