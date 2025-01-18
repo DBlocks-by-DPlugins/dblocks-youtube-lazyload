@@ -62,7 +62,10 @@ For more information about embeds:
 == Changelog ==
 
 = 1.1.0 =
-Ability to use custom icon. 
+* Ability to use custom icon. 
+* Moved colors under "Played icon panel"
+* Updated button styles for choosing icons
+
 
 = 1.0.3 =
 * Assets update.
