@@ -107,7 +107,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 
     const globalSettings = useSelect((select) => select(STORE_NAME).getGlobalSettings(), []);
     const { setGlobalSetting, setGlobalSettings } = useDispatch(STORE_NAME);
-
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         const fetchGlobalSettings = async () => {
@@ -128,6 +128,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                     setHasDropped(true);
                 }
                 globalSettingsLoaded.current = true;
+                setIsLoaded(true); 
             } catch (error) {
                 console.error('Failed to fetch global settings:', error);
             }
@@ -209,7 +210,8 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const handlePreviewClick = () => {
         if (youtubeId) {
             setIsEditing(false);
-            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType });
+
+            {isLoaded && renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })};
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
@@ -368,7 +370,9 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         {errorMessage && <p className="lazy-load__title__instructions">{errorMessage}</p>}
                     </div>
                 ) : youtubeId ? (
-                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })
+                    isLoaded ? (
+                        renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })
+                    ) : null
                 ) : null}
             </div>
         </>
