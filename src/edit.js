@@ -286,7 +286,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         </div>
                     )}
 
-                    {hasDropped && svgContent && (
+                    {iconType === 'custom' && hasDropped && svgContent && (
                         <div className="svg-preview-wrapper">
                             <div className="svg-preview drop-zone-wrapper" dangerouslySetInnerHTML={{ __html: svgContent }} />
                             <Button
