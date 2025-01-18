@@ -4,7 +4,19 @@ import { extractYoutubeId } from "./utils/youtubeHelpers";
 import PlayContent from "./components/playContent";
 
 const Save = ({ attributes }) => {
-    const { url, containerId, align, quality, playButtonStyle, playButtonSize, color, textColor, svgContent } = attributes;
+    const {
+        url,
+        containerId,
+        align,
+        quality,
+        playButtonStyle,
+        playButtonSize,
+        color,
+        textColor,
+        svgContent,
+        iconType,
+    } = attributes;
+
     const youtubeId = extractYoutubeId(url);
 
     // Construct the class name based on the alignment
@@ -26,6 +38,7 @@ const Save = ({ attributes }) => {
                     color={color || '#800080'}
                     textColor={textColor || '#FFFFFF'}
                     svgContent={svgContent || ""}
+                    iconType={iconType || 'iconPresets'}
                 />
             )}
         </div>

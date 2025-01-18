@@ -36,6 +36,6 @@ function loadYouTubeVideo(youtubeId, containerId) {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    alert("Marko is ready");
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     alert("Marko is ready");
+// });
