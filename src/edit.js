@@ -209,7 +209,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const handlePreviewClick = () => {
         if (youtubeId) {
             setIsEditing(false);
-            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent });
+            renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType });
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
@@ -368,7 +368,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         {errorMessage && <p className="lazy-load__title__instructions">{errorMessage}</p>}
                     </div>
                 ) : youtubeId ? (
-                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent })
+                    renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })
                 ) : null}
             </div>
         </>

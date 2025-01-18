@@ -10,6 +10,7 @@ const PlayContent = ({
     color,
     textColor,
     svgContent,
+    iconType,
 }) => {
     const youtubeId = extractYoutubeId(url);
     const placeholderImageUrl = getPlaceholderImageUrl(youtubeId, quality);
@@ -27,10 +28,22 @@ const PlayContent = ({
                         width: playButtonSize,
                         height: playButtonSize,
                     }}
-                    dangerouslySetInnerHTML={{
-                        __html: svgContent || svgIcon, // Use svgContent if available, fallback to svgIcon
-                    }}
-                />
+                >
+                    {iconType === 'custom' && (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: svgContent || svgIcon, // Use svgContent if available, fallback to svgIcon
+                            }}
+                        />
+                    )}
+                    {iconType === 'iconPresets' && (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: svgIcon,
+                            }}
+                        />
+                    )}
+                </div>
             </button>
             <img
                 src={placeholderImageUrl}
