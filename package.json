@@ -6,9 +6,9 @@
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "wp-scripts build",
-		"start": "wp-scripts start",
-		"hot": "wp-scripts start --hot",
+		"build": "wp-scripts build --webpack-copy-php",
+		"start": "wp-scripts start --webpack-copy-php",
+		"hot": "wp-scripts start --hot --webpack-copy-php",
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
