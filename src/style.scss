@@ -5,3 +5,11 @@
 	position: relative;
 	display: flex;
 }
+
+.wp-block-dblocks-dblocks-lazyload-for-youtube {
+	@import "./styles/thumb";
+	@import "./styles/play-button";
+
+	position: relative;
+	display: flex;
+}

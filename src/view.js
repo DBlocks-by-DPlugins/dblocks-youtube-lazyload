@@ -34,8 +34,3 @@ function loadYouTubeVideo(youtubeId, containerId) {
         console.error("Container not found for ID:", containerId);
     }
 }
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     alert("Marko is ready");
-// });

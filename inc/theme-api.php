@@ -44,7 +44,6 @@ function dblocks_youtube_get_options()
 {
     return [
         'minHeight' => '100px',
-        'quality' => 'maxresdefault',
         'iconType' => 'iconPresets',
         'color' => '#800080',
         'textColor' => '#FFFFFF',
