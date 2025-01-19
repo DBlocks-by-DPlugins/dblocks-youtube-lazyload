@@ -148,6 +148,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             playButtonSize: globalSettings.playButtonSize,
             playButtonStyle: globalSettings.playButtonStyle,
             minHeight: globalSettings.minHeight,
+            iconType: globalSettings.iconType
         });
     }, [globalSettings, setAttributes]);
 
