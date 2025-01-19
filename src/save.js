@@ -27,7 +27,11 @@ const Save = ({ attributes }) => {
         <div
             id={containerId}
             className={className}
-            style={{ '--play-background': color || '#800080', '--play-icon-color': textColor || '#FFFFFF', '--play-button-size': playButtonSize || '64px' }}
+            style={{
+                '--play-background': color || '#800080',
+                '--play-icon-color': textColor || '#FFFFFF',
+                '--play-button-size': playButtonSize || '64px'
+            }}
         >
             {youtubeId && (
                 <PlayContent
