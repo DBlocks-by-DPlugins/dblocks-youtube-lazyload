@@ -16,8 +16,8 @@
         <div
             class="play-icon-wrap play-icon-custom"
             style="
-                width:<?php echo esc_attr($attributes['playButtonSize']); ?>px;
-                height:<?php echo esc_attr($attributes['playButtonSize']); ?>px">
+                width:<?php echo esc_attr($attributes['playButtonSize']); ?>;
+                height:<?php echo esc_attr($attributes['playButtonSize']); ?>">
 
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none">
                 <path
