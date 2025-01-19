@@ -1,3 +1,4 @@
+
 <?php
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
@@ -47,33 +48,73 @@ function dblocks_youtube_get_global_settings()
         'playButtonSize' => get_option('dblocks_playButtonSize', '100px'),
         'playButtonStyle' => get_option('dblocks_playButtonStyle', 0),
         'minHeight' => get_option('dblocks_minHeight', '100px'),
-        'iconType' => get_option('dblocks_iconType', 'iconType'),
         'svgContent' => get_option('dblocks_svgContent', ''),
+        'iconType' => get_option('dblocks_iconType', 'iconPresets'),
     ];
 }
+
+
+
+define('DBLOCKS_ALLOWED_SVG_TAGS', [
+    'svg' => [
+        'xmlns' => true,
+        'width' => true,
+        'height' => true,
+        'viewBox' => true,
+        'fill' => true,
+        'stroke' => true,
+    ],
+    'path' => [
+        'd' => true,
+        'fill' => true,
+        'stroke' => true,
+        'stroke-width' => true,
+    ],
+    'circle' => [
+        'cx' => true,
+        'cy' => true,
+        'r' => true,
+        'fill' => true,
+    ],
+    'rect' => [
+        'x' => true,
+        'y' => true,
+        'width' => true,
+        'height' => true,
+        'fill' => true,
+    ],
+    'g' => [],
+]);
+
 
 function dblocks_youtube_update_global_settings(WP_REST_Request $request)
 {
     $params = $request->get_params();
-    $options = [
-        'color' => 'dblocks_color',
-        'textColor' => 'dblocks_textColor',
-        'quality' => 'dblocks_quality',
-        'playButtonSize' => 'dblocks_playButtonSize',
-        'playButtonStyle' => 'dblocks_playButtonStyle',
-        'minHeight' => 'dblocks_minHeight',
-        'iconType' => 'dblocks_iconType',
-        'svgContent' => 'dblocks_svgContent',
-    ];
 
-    foreach ($options as $param => $option_name) {
-        if (isset($params[$param])) {
-            if ($param === 'svgContent') {
-                // Sanitize SVG content
-                $params[$param] = wp_kses_post($params[$param]);
-            }
-            update_option($option_name, $params[$param]);
-        }
+    if (isset($params['color'])) {
+        update_option('dblocks_color', $params['color']);
+    }
+    if (isset($params['textColor'])) {
+        update_option('dblocks_textColor', $params['textColor']);
+    }
+    if (isset($params['quality'])) {
+        update_option('dblocks_quality', $params['quality']);
+    }
+    if (isset($params['playButtonSize'])) {
+        update_option('dblocks_playButtonSize', $params['playButtonSize']);
+    }
+    if (isset($params['playButtonStyle'])) {
+        update_option('dblocks_playButtonStyle', $params['playButtonStyle']);
+    }
+    if (isset($params['minHeight'])) {
+        update_option('dblocks_minHeight', $params['minHeight']);
+    }
+    if (isset($params['svgContent'])) {
+        $sanitized_svg = wp_kses($params['svgContent'], DBLOCKS_ALLOWED_SVG_TAGS);
+        update_option('dblocks_svgContent', $sanitized_svg);
+    }
+    if (isset($params['iconType'])) {
+        update_option('dblocks_iconType', $params['iconType']);
     }
 
     return dblocks_youtube_get_global_settings();
