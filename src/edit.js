@@ -126,6 +126,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                 if (settings.svgContent) {
                     setSvgContent(settings.svgContent)
                     setHasDropped(true);
+                    setAttributes({'svgContent': settings.svgContent})
                 }
                 globalSettingsLoaded.current = true;
                 setIsLoaded(true); 
@@ -210,7 +211,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const handlePreviewClick = () => {
         if (youtubeId) {
             setIsEditing(false);
-
+            console.log("svg:", svgContent)
             {isLoaded && renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })};
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
