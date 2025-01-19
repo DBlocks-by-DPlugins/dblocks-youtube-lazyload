@@ -47,8 +47,8 @@ function dblocks_youtube_get_global_settings()
         'playButtonSize' => get_option('dblocks_playButtonSize', '100px'),
         'playButtonStyle' => get_option('dblocks_playButtonStyle', 0),
         'minHeight' => get_option('dblocks_minHeight', '100px'),
-        'svgContent' => get_option('dblocks_svgContent', ''),
         'iconType' => get_option('dblocks_iconType', 'iconType'),
+        'svgContent' => get_option('dblocks_svgContent', ''),
     ];
 }
 
@@ -62,12 +62,16 @@ function dblocks_youtube_update_global_settings(WP_REST_Request $request)
         'playButtonSize' => 'dblocks_playButtonSize',
         'playButtonStyle' => 'dblocks_playButtonStyle',
         'minHeight' => 'dblocks_minHeight',
-        'svgContent' => 'dblocks_svgContent',
         'iconType' => 'dblocks_iconType',
+        'svgContent' => 'dblocks_svgContent',
     ];
 
     foreach ($options as $param => $option_name) {
         if (isset($params[$param])) {
+            if ($param === 'svgContent') {
+                // Sanitize SVG content
+                $params[$param] = wp_kses_post($params[$param]);
+            }
             update_option($option_name, $params[$param]);
         }
     }
