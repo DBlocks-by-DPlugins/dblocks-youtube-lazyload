@@ -8,9 +8,6 @@
         --play-background:<?php echo esc_attr($attributes['color']); ?>;
         --play-icon-color:<?php echo esc_attr($attributes['textColor']); ?>;
         --play-button-size:<?php echo esc_attr($attributes['playButtonSize']); ?>px">
-
-    <p>mm: <?php echo esc_attr($attributes['urlExtract']); ?></p>
-
     <button
         class="play-button"
         data-youtube-id="<?php $youtubeId = isset($attributes['urlExtract']) ? esc_attr($attributes['urlExtract']) : '';
@@ -38,9 +35,51 @@
         src="https://img.youtube.com/vi/<?php echo $youtubeId; ?>/<?php echo esc_attr($attributes['quality']); ?>.jpg" />
 </div>
 
-<h2>Info:</h2>
+<pre style="font-size: 12px;">
+    <code>
+        <?php echo esc_html($attributes['url']); ?> </br>
+        <?php echo esc_attr($attributes['urlExtract']); ?> </br>
+        <?php echo esc_attr($attributes['containerId']); ?> </br>
+        <?php echo esc_attr($attributes['quality']); ?> </br>
+    </code>
+</pre>
 
-<p><?php echo esc_html($attributes['url']); ?></p>
-<p><?php echo esc_attr($attributes['containerId']); ?></p>
-<p><?php echo esc_attr($attributes['urlExtract']); ?></p>
-<p><?php echo esc_attr($attributes['quality']); ?></p>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.addEventListener("click", function(event) {
+            let targetElement = event.target;
+
+            // Loop through the DOM tree to find if the clicked element is a play button or a child of it
+            while (targetElement != null) {
+                if (
+                    targetElement.matches(
+                        ".wp-block-dblocks-dblocks-lazyload-for-youtube .play-button"
+                    )
+                ) {
+                    const youtubeId = targetElement.getAttribute("data-youtube-id");
+                    const containerId = targetElement.parentElement.id;
+                    loadYouTubeVideo(youtubeId, containerId);
+                    return; // Stop the loop and exit the function
+                }
+                targetElement = targetElement.parentElement;
+            }
+        });
+    });
+
+    function loadYouTubeVideo(youtubeId, containerId) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+            <iframe 
+                style="width: 100%; aspect-ratio: 16/9; position: relative; height: auto;"
+                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>`;
+        } else {
+            console.error("Container not found for ID:", containerId);
+        }
+    }
+</script>
