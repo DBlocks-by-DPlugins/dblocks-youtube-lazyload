@@ -9,7 +9,12 @@
         --play-icon-color:<?php echo esc_attr($attributes['textColor']); ?>;
         --play-button-size:<?php echo esc_attr($attributes['playButtonSize']); ?>px">
 
-    <button class="play-button" data-youtube-id="<?php echo esc_attr($attributes['youtubeId']); ?>">
+    <p>mm: <?php echo esc_attr($attributes['urlExtract']); ?></p>
+
+    <button
+        class="play-button"
+        data-youtube-id="<?php $youtubeId = isset($attributes['urlExtract']) ? esc_attr($attributes['urlExtract']) : '';
+                            echo $youtubeId; ?>">
 
         <div
             class="play-icon-wrap play-icon-custom"
@@ -30,7 +35,7 @@
         decoding="async"
         alt="YouTube Video Placeholder"
         class="youtube-placeholder-image"
-        src="https://img.youtube.com/vi/<?php echo esc_attr($attributes['urlExtract']); ?>/<?php echo esc_attr($attributes['quality']); ?>.jpg" />
+        src="https://img.youtube.com/vi/<?php echo $youtubeId; ?>/<?php echo esc_attr($attributes['quality']); ?>.jpg" />
 </div>
 
 <h2>Info:</h2>
