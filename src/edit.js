@@ -150,7 +150,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
             minHeight: globalSettings.minHeight,
             iconType: globalSettings.iconType
         });
-    }, [globalSettings, setAttributes]);
+    }, [globalSettings, setAttributes, isLoaded]);
 
     useEffect(() => {
         if (!containerId) {
