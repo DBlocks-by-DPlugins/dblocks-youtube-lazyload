@@ -4,6 +4,10 @@
 
     $play_icon_color = isset($attributes['textColor']) ? esc_attr($attributes['textColor']) : '#FFFFFF';
     $play_background = isset($attributes['color']) ? esc_attr($attributes['color']) : '#800080';
+    $playButtonSize = isset($attributes['playButtonSize']) ? esc_attr($attributes['playButtonSize']) : '100px';
+
+    $quality = isset($attributes['quality']) ? esc_attr($attributes['quality']) : 'maxresdefault';
+    $youtubeId = isset($attributes['urlExtract']) ? esc_attr($attributes['urlExtract']) : '';
 
     include 'icons.php';
 
@@ -11,20 +15,19 @@
     id="<?php echo esc_attr($attributes['containerId']); ?>"
 
     style="
-        --play-background:<?php echo esc_attr($attributes['color']); ?>;
-        --play-icon-color:<?php echo esc_attr($attributes['textColor']); ?>;
-        --play-button-size:<?php echo esc_attr($attributes['playButtonSize']); ?>px">
+        --play-background:<?php echo $play_background; ?>;
+        --play-icon-color:<?php echo $play_icon_color; ?>;
+        --play-button-size:<?php echo $playButtonSize; ?>">
 
     <button
         class="play-button"
-        data-youtube-id="<?php $youtubeId = isset($attributes['urlExtract']) ? esc_attr($attributes['urlExtract']) : '';
-                            echo $youtubeId; ?>">
+        data-youtube-id="<?php echo $youtubeId; ?>">
 
         <div
             class="play-icon-wrap play-icon-custom"
             style="
-                width:<?php echo esc_attr($attributes['playButtonSize']); ?>;
-                height:<?php echo esc_attr($attributes['playButtonSize']); ?>">
+                width:<?php echo $playButtonSize; ?>;
+                height:<?php echo $playButtonSize; ?>">
 
 
             <?php
@@ -49,5 +52,5 @@
         decoding="async"
         alt="YouTube Video Placeholder"
         class="youtube-placeholder-image"
-        src="https://img.youtube.com/vi/<?php echo $youtubeId; ?>/<?php echo esc_attr($attributes['quality']); ?>.jpg" />
+        src="https://img.youtube.com/vi/<?php echo $youtubeId; ?>/<?php echo $quality; ?>.jpg" />
 </div>
