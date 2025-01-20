@@ -17,6 +17,7 @@ import { extractYoutubeId } from './utils/youtubeHelpers.js';
 import { renderPreview } from './components/renderPreview.js';
 import BlockControlsComponent from './controls/BlockControls.js';
 import sanitizeSVG from '@mattkrick/sanitize-svg';
+import { media } from '@wordpress/media-utils';
 import './editor.scss';
 
 const STORE_NAME = 'dblocks/global-settings';
@@ -96,6 +97,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         color,
         textColor,
         iconType,
+        customThumbnail,
     } = attributes;
 
     let { containerId } = attributes;
@@ -255,6 +257,27 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         saveGlobalSetting('svgContent', '');
     };
 
+    const openMediaLibrary = () => {
+        const frame = wp.media({
+            title: 'Select or Upload Media',
+            button: {
+                text: 'Use this media',
+            },
+            multiple: false,
+        });
+
+        frame.on('select', () => {
+            const attachment = frame.state().get('selection').first().toJSON();
+            setAttributes({ customThumbnail: attachment.url });
+        });
+
+        frame.open();
+    };
+
+    const removeThumbnail = () => {
+        setAttributes({ customThumbnail: '' });
+    };
+
     return (
         <>
             <InspectorControls>
@@ -265,6 +288,23 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                         options={qualityOptions}
                         onChange={handleQualityChange}
                     />
+                    {customThumbnail ? (
+                        <>
+                            <div className="custom-thumbnail-preview">
+                                <img
+                                    src={customThumbnail}
+                                    alt="Custom Thumbnail Preview"
+                                    style={{ width: '100%', marginTop: '10px' }}
+                                />
+                                <div className="custom-thumbnail-preview__buttons">
+                                    <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={openMediaLibrary}>Replace</Button>
+                                    <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={removeThumbnail}>Remove</Button>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={openMediaLibrary}>Add Custom Thumbnail</Button>
+                    )}
                 </PanelBody>
 
                 <PanelBody title="Player Icon" initialOpen={true}>

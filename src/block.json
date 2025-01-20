@@ -52,6 +52,9 @@
         },
         "urlExtract": {
             "type": "string"
+        },
+        "customThumbnail": {
+            "type": "string"
         }
     },
     "textdomain": "dblocks-lazyload-for-youtube",
