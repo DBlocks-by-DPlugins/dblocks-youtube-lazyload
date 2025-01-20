@@ -62,7 +62,7 @@ For more information about embeds:
 == Changelog ==
 
 = 1.1.1 =
-* Added option to use custom icon.
+* Added option to use custom icon. SVG will be sanitized on upload.
 * Color, size, style, quality, icon type, svg content are now global settings.
 * Quality is now pre block settings. It will use heighers quality and you can lower it if some video does not support it.
 * Fixed issue with container id if block is duplicated. It was causing play video in first block.
