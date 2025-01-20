@@ -19,10 +19,11 @@ GDPR friendly lazyload youtube player that load content only if user click on th
 -   **Icon styles**: Choose between 6 icon styles to apply them globaly
 -   **Icon colors**: Use WordPress Theme colors to apply on play button
 -   **Icon size**: Define size of the play button
--   **Thumbnail image quality** choose what you will fetch from youtube
--   **Styles are global**: Apply then once see changes across entire website
 -   **Custom play icon**: Ability to upload your own SVG play icon. 
+-   **Styles are global**: Apply then once see changes across entire website
+-   **Thumbnail image quality** choose what you will fetch from youtube
 -   **Custom thumbnail**: Ability to upload your own thumbnail image.
+
 ### Third-Party Services
 
 This plugin integrates with YouTube's services in the following ways:
