@@ -4,7 +4,7 @@ $play_icon_color = esc_attr(get_option('dblocks_color', '#FFFFFF'));
 $play_background = esc_attr(get_option('dblocks_textColor', '#800080'));
 $playButtonSize = esc_attr(get_option('dblocks_playButtonSize', '100px'));
 $iconType = esc_attr(get_option('dblocks_iconType', 'iconPresets'));
-$svgContent = esc_attr(get_option('dblocks_svgContent', ''));
+$svgContent = get_option('dblocks_svgContent', '');
 $playButtonStyle = is_numeric(get_option('dblocks_playButtonStyle', 0)) ? (int)get_option('dblocks_playButtonStyle', 0) : 0;
 
 // Local settings

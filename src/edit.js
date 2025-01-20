@@ -16,6 +16,7 @@ import PlayerStyleButtons from './components/playButtonPresets.js';
 import { extractYoutubeId } from './utils/youtubeHelpers.js';
 import { renderPreview } from './components/renderPreview.js';
 import BlockControlsComponent from './controls/BlockControls.js';
+import sanitizeSVG from '@mattkrick/sanitize-svg';
 import './editor.scss';
 
 const STORE_NAME = 'dblocks/global-settings';
@@ -216,17 +217,24 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         }
     };
 
-    const handleDrop = (files) => {
+    const handleDrop = async (files) => {
         const file = files[0];
         if (file && file.type === 'image/svg+xml') {
             const reader = new FileReader();
             reader.onload = async (event) => {
                 let svg = event.target.result;
-                const svgStart = svg.indexOf('<svg');
-                const svgEnd = svg.lastIndexOf('</svg>') + 6; // 6 is the length of '</svg>'
+                const cleanSvg = await sanitizeSVG(svg);
+
+                if (!cleanSvg) {
+                    alert('Invalid SVG content detected.');
+                    return;
+                }
+
+                const svgStart = cleanSvg.indexOf('<svg');
+                const svgEnd = cleanSvg.lastIndexOf('</svg>') + 6; // 6 is the length of '</svg>'
 
                 if (svgStart !== -1 && svgEnd !== -1) {
-                    svg = svg.substring(svgStart, svgEnd);
+                    svg = cleanSvg.substring(svgStart, svgEnd);
                 }
 
                 setSvgContent(svg);
