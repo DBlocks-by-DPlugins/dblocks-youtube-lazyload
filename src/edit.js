@@ -151,11 +151,9 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     }, [globalSettings, setAttributes, isLoaded]);
 
     useEffect(() => {
-        if (!containerId) {
-            const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
-            setAttributes({ containerId: newContainerId });
-        }
-    }, [containerId, setAttributes]);
+        const newContainerId = `youtube-container-${Math.floor(Math.random() * 1000000)}`;
+        setAttributes({ containerId: newContainerId });
+    }, [setAttributes]);
 
     const saveGlobalSetting = async (attribute, value) => {
         setGlobalSetting(attribute, value);
