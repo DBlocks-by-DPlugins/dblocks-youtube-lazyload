@@ -15,15 +15,14 @@ import { qualityOptions, defaultQuality } from './utils/qualitySettings.js';
 import PlayerStyleButtons from './components/playButtonPresets.js';
 import { extractYoutubeId } from './utils/youtubeHelpers.js';
 import { renderPreview } from './components/renderPreview.js';
-import './editor.scss';
 import BlockControlsComponent from './controls/BlockControls.js';
+import './editor.scss';
 
 const STORE_NAME = 'dblocks/global-settings';
 
 const DEFAULT_GLOBAL_SETTINGS = {
     color: '#800080',
     textColor: '#FFFFFF',
-    quality: 'maxresdefault',
     playButtonSize: '100px',
     playButtonStyle: 0,
     minHeight: '100px',
@@ -126,10 +125,10 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                 if (settings.svgContent) {
                     setSvgContent(settings.svgContent)
                     setHasDropped(true);
-                    setAttributes({'svgContent': settings.svgContent})
+                    setAttributes({ 'svgContent': settings.svgContent })
                 }
                 globalSettingsLoaded.current = true;
-                setIsLoaded(true); 
+                setIsLoaded(true);
             } catch (error) {
                 console.error('Failed to fetch global settings:', error);
             }
@@ -144,7 +143,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         setAttributes({
             color: globalSettings.color,
             textColor: globalSettings.textColor,
-            quality: globalSettings.quality,
             playButtonSize: globalSettings.playButtonSize,
             playButtonStyle: globalSettings.playButtonStyle,
             minHeight: globalSettings.minHeight,
@@ -178,12 +176,13 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     };
 
     const handleUrlChange = (newUrl) => {
-        setAttributes({ url: newUrl });
+        const youtubeId = extractYoutubeId(newUrl);
+        setAttributes({ url: newUrl, urlExtract: youtubeId });
         setErrorMessage('');
     };
 
     const handleQualityChange = (newQuality) => {
-        saveGlobalSetting('quality', newQuality);
+        setAttributes({ quality: newQuality });
     };
 
     const handlePlayButtonSizeChange = (newSize) => {
@@ -213,7 +212,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         if (youtubeId) {
             setIsEditing(false);
             console.log("svg:", svgContent)
-            {isLoaded && renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })};
+            { isLoaded && renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType }) };
         } else {
             setErrorMessage("Sorry, this content could not be embedded.");
         }
