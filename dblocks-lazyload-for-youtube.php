@@ -5,7 +5,7 @@
  * Description:       GDPR friendly block for lazyload youtube player that load content only if user click on the play video
  * Requires at least: 6.5.2
  * Requires PHP:      7.4
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            DPlugins
  * Author URI:        https://dplugins.com/
  * License:           GPL-2.0-or-later

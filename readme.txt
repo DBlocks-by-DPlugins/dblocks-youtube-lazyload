@@ -3,7 +3,7 @@ Contributors: dplugins, krstivoja
 Tags: youtube, lazy, load, gdpr, dblocks, custom icon
 Requires at least: 4.0
 Tested up to: 6.7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -60,6 +60,12 @@ For more information about embeds:
 
 
 == Changelog ==
+
+= 1.1.1 =
+* Added option to use custom icon.
+* Color, size, style, quality, icon type, svg content are now global settings.
+* Quality is now pre block settings. It will use heighers quality and you can lower it if some video does not support it.
+* Fixed issue with container id if block is duplicated. It was causing play video in first block.
 
 = 1.1.0 =
 * Ability to use custom icon. 

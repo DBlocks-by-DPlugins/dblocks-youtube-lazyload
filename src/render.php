@@ -42,16 +42,3 @@ $svgIcon = $svgIcons[$playButtonStyle] ?? $svgIcons[0];
         class="youtube-placeholder-image"
         src="https://img.youtube.com/vi/<?php echo esc_attr($youtubeId); ?>/<?php echo esc_attr($quality); ?>.jpg" />
 </div>
-
-
-<?php
-// echo $containerId . '<br>';
-// echo $youtubeId . '<br>';
-// echo $playButtonStyle . '<br>';
-// echo $iconType . '<br>';
-// echo $svgContent . '<br>';
-// echo $play_background . '<br>';
-// echo $play_icon_color . '<br>';
-// echo $playButtonSize . '<br>';
-// echo $quality . '<br>';
-?>
