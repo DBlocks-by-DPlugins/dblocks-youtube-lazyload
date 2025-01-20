@@ -1,15 +1,16 @@
 <?php
-// Extract attributes with defaults
+// global settings
 $play_icon_color = esc_attr(get_option('dblocks_color', '#FFFFFF'));
 $play_background = esc_attr(get_option('dblocks_textColor', '#800080'));
-
 $playButtonSize = esc_attr($attributes['playButtonSize'] ?? '100px');
-$quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
-$youtubeId = esc_attr($attributes['urlExtract'] ?? '');
-$containerId = esc_attr($attributes['containerId'] ?? '');
 $iconType = $attributes['iconType'] ?? 'iconPresets';
 $svgContent = $attributes['svgContent'] ?? '';
 $playButtonStyle = isset($attributes['playButtonStyle']) && is_numeric($attributes['playButtonStyle']) ? (int)$attributes['playButtonStyle'] : 0;
+
+// Local settings
+$quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
+$youtubeId = esc_attr($attributes['urlExtract'] ?? '');
+$containerId = esc_attr($attributes['containerId'] ?? '');
 
 // Include icons
 include 'icons.php';
