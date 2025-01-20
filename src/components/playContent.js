@@ -11,6 +11,7 @@ const PlayContent = ({
     textColor,
     svgContent,
     iconType,
+    customThumbnail,
 }) => {
     const youtubeId = extractYoutubeId(url);
     const placeholderImageUrl = getPlaceholderImageUrl(youtubeId, quality);
@@ -46,7 +47,7 @@ const PlayContent = ({
                 </div>
             </button>
             <img
-                src={placeholderImageUrl}
+                src={customThumbnail || placeholderImageUrl}
                 alt="YouTube Video Placeholder"
                 className="youtube-placeholder-image"
             />
