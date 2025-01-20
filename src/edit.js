@@ -221,7 +221,14 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         if (file && file.type === 'image/svg+xml') {
             const reader = new FileReader();
             reader.onload = async (event) => {
-                const svg = event.target.result;
+                let svg = event.target.result;
+                const svgStart = svg.indexOf('<svg');
+                const svgEnd = svg.lastIndexOf('</svg>') + 6; // 6 is the length of '</svg>'
+
+                if (svgStart !== -1 && svgEnd !== -1) {
+                    svg = svg.substring(svgStart, svgEnd);
+                }
+
                 setSvgContent(svg);
                 setHasDropped(true);
                 await saveGlobalSetting('svgContent', svg); // Save SVG to the backend

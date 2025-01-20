@@ -109,7 +109,6 @@ function sanitize_svg_content($svg_content)
         'height',
         'version',
         'viewBox',
-        'xmlns',
         'fill',
         'd',
         'x',
