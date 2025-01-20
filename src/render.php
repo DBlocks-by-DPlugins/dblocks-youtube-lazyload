@@ -1,7 +1,8 @@
 <?php
 // Extract attributes with defaults
-$play_icon_color = esc_attr($attributes['textColor'] ?? '#FFFFFF');
-$play_background = esc_attr($attributes['color'] ?? '#800080');
+$play_icon_color = esc_attr(get_option('dblocks_color', '#FFFFFF'));
+$play_background = esc_attr(get_option('dblocks_textColor', '#800080'));
+
 $playButtonSize = esc_attr($attributes['playButtonSize'] ?? '100px');
 $quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
 $youtubeId = esc_attr($attributes['urlExtract'] ?? '');
