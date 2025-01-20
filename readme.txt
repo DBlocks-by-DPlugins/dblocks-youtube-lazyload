@@ -1,9 +1,9 @@
 === DBlocks Lazyload for YouTube ===
 Contributors: dplugins, krstivoja
-Tags: youtube, lazy, load, gdpr, dblocks, custom icon
+Tags: youtube, lazy, load, gdpr, dblocks
 Requires at least: 4.0
 Tested up to: 6.7.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,9 +21,8 @@ GDPR friendly lazyload youtube player that load content only if user click on th
 -   **Icon size**: Define size of the play button
 -   **Thumbnail image quality** choose what you will fetch from youtube
 -   **Styles are global**: Apply then once see changes across entire website
--   **Multiple Viewing Modes**: Includes 'Code', 'Preview', and 'Split View' modes, enabling you to code and preview content simultaneously or separately, optimizing your workflow.
 -   **Custom play icon**: Ability to upload your own SVG play icon. 
-
+-   **Custom thumbnail**: Ability to upload your own thumbnail image.
 ### Third-Party Services
 
 This plugin integrates with YouTube's services in the following ways:
@@ -60,6 +59,11 @@ For more information about embeds:
 
 
 == Changelog ==
+
+
+
+= 1.2.1 =
+* Updated readme file. 
 
 = 1.2.0 =
 * Added option to upload custom thumbnail for extra privacy.
