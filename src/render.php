@@ -2,10 +2,10 @@
 // global settings
 $play_icon_color = esc_attr(get_option('dblocks_color', '#FFFFFF'));
 $play_background = esc_attr(get_option('dblocks_textColor', '#800080'));
-$playButtonSize = esc_attr($attributes['playButtonSize'] ?? '100px');
-$iconType = $attributes['iconType'] ?? 'iconPresets';
-$svgContent = $attributes['svgContent'] ?? '';
-$playButtonStyle = isset($attributes['playButtonStyle']) && is_numeric($attributes['playButtonStyle']) ? (int)$attributes['playButtonStyle'] : 0;
+$playButtonSize = esc_attr(get_option('dblocks_playButtonSize', '100px'));
+$iconType = esc_attr(get_option('dblocks_iconType', 'iconPresets'));
+$svgContent = esc_attr(get_option('dblocks_svgContent', ''));
+$playButtonStyle = is_numeric(get_option('dblocks_playButtonStyle', 0)) ? (int)get_option('dblocks_playButtonStyle', 0) : 0;
 
 // Local settings
 $quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
@@ -45,13 +45,13 @@ $svgIcon = $svgIcons[$playButtonStyle] ?? $svgIcons[0];
 
 
 <?php
-echo $containerId . '<br>';
-echo $youtubeId . '<br>';
-echo $playButtonStyle . '<br>';
-echo $iconType . '<br>';
-echo $svgContent . '<br>';
-echo $play_background . '<br>';
-echo $play_icon_color . '<br>';
-echo $playButtonSize . '<br>';
-echo $quality . '<br>';
+// echo $containerId . '<br>';
+// echo $youtubeId . '<br>';
+// echo $playButtonStyle . '<br>';
+// echo $iconType . '<br>';
+// echo $svgContent . '<br>';
+// echo $play_background . '<br>';
+// echo $play_icon_color . '<br>';
+// echo $playButtonSize . '<br>';
+// echo $quality . '<br>';
 ?>
