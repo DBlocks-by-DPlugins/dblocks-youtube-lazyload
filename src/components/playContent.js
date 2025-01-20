@@ -49,7 +49,7 @@ const PlayContent = ({
             <img
                 src={customThumbnail || placeholderImageUrl}
                 alt="YouTube Video Placeholder"
-                className="youtube-placeholder-image"
+                className={`youtube-placeholder-image ${customThumbnail ? 'youtube-placeholder-image--custom-thumbnail' : ''}`}
             />
         </>
     );

@@ -11,7 +11,7 @@ $playButtonStyle = is_numeric(get_option('dblocks_playButtonStyle', 0)) ? (int)g
 $quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
 $youtubeId = esc_attr($attributes['urlExtract'] ?? '');
 $containerId = esc_attr($attributes['containerId'] ?? '');
-
+$customThumbnail = esc_attr($attributes['customThumbnail'] ?? '');
 // Include icons
 include 'icons.php';
 
@@ -39,6 +39,6 @@ $svgIcon = $svgIcons[$playButtonStyle] ?? $svgIcons[0];
 
     <img decoding="async"
         alt="YouTube Video Placeholder"
-        class="youtube-placeholder-image"
-        src="https://img.youtube.com/vi/<?php echo esc_attr($youtubeId); ?>/<?php echo esc_attr($quality); ?>.jpg" />
+        class="youtube-placeholder-image <?php echo $customThumbnail ? 'youtube-placeholder-image--custom-thumbnail' : ''; ?>"
+        src="<?php echo esc_attr($customThumbnail ?: "https://img.youtube.com/vi/{$youtubeId}/{$quality}.jpg"); ?>" />
 </div>

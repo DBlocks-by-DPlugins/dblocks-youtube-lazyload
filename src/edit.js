@@ -423,7 +423,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                     </div>
                 ) : youtubeId ? (
                     isLoaded ? (
-                        renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType })
+                        renderPreview({ url, quality, playButtonSize, playButtonStyle, color, textColor, svgContent, iconType, customThumbnail })
                     ) : null
                 ) : null}
             </div>
