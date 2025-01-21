@@ -1,7 +1,7 @@
 <?php
 // global settings
-$play_icon_color = esc_attr(get_option('dblocks_color', '#FFFFFF'));
-$play_background = esc_attr(get_option('dblocks_textColor', '#800080'));
+$play_icon_color = esc_attr(get_option('dblocks_textColor', '#800080'));
+$play_background = esc_attr(get_option('dblocks_color', '#FFFFFF'));
 $playButtonSize = esc_attr(get_option('dblocks_playButtonSize', '100px'));
 $iconType = esc_attr(get_option('dblocks_iconType', 'iconPresets'));
 $svgContent = get_option('dblocks_svgContent', '');
