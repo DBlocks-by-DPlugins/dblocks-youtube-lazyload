@@ -16,7 +16,7 @@ registerBlockType(metadata.name, {
                         (url.includes("youtube.com") ||
                             url.includes("youtu.be"))
                     ) {
-                        return createBlock("dblocks/lazyload-for-youtube", {
+                        return createBlock("dblocks/dblocks-lazyload-for-youtube", {
                             url,
                         });
                     }
@@ -27,7 +27,7 @@ registerBlockType(metadata.name, {
                 type: 'block',
                 blocks: ['create-block/dp-lazy-youtube'],
                 transform: (attributes) => {
-                    return createBlock('dblocks/lazyload-for-youtube', {
+                    return createBlock('dblocks/dblocks-lazyload-for-youtube', {
                         ...attributes
                     });
                 },
