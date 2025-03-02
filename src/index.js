@@ -23,19 +23,16 @@ registerBlockType(metadata.name, {
                     return createBlock("core/embed", attributes);
                 },
             },
+            {
+                type: 'block',
+                blocks: ['create-block/dp-lazy-youtube'],
+                transform: (attributes) => {
+                    return createBlock('dblocks/lazyload-for-youtube', {
+                        ...attributes
+                    });
+                },
+            }
         ],
-
-        from: [
-			{
-				type: 'block',
-				blocks: ['create-block/dp-lazy-youtube'],
-				transform: (attributes) => {
-					return createBlock('dblocks/lazyload-for-youtube', {
-						...attributes
-					});
-				},
-			},
-		],
     },
 
     edit: Edit,
