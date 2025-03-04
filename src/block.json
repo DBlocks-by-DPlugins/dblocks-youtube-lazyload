@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "dblocks/dblocks-lazyload-for-youtube",
-    "version": "1.0.0",
+    "version": "1.2.5",
     "title": "Youtube LazyLoad",
     "category": "dblocks",
     "icon": "video-alt3",
