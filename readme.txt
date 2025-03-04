@@ -61,6 +61,9 @@ For more information about embeds:
 
 == Changelog ==
 
+= 1.2.6 =
+* Fixed Rendering image on the front end to work correctly with WordPress installations in subdirectories
+
 = 1.2.5 =
 * Fixed REST API endpoint URLs to work correctly with WordPress installations in subdirectories
 

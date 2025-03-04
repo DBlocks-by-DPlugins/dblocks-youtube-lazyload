@@ -1,7 +1,7 @@
 <?php
 // global settings
-$play_icon_color = esc_attr(get_option('dblocks_textColor', '#800080'));
-$play_background = esc_attr(get_option('dblocks_color', '#FFFFFF'));
+$play_icon_color = esc_attr(get_option('dblocks_textColor', '#FFFFFF'));
+$play_background = esc_attr(get_option('dblocks_color', '#800080'));
 $playButtonSize = esc_attr(get_option('dblocks_playButtonSize', '100px'));
 $iconType = esc_attr(get_option('dblocks_iconType', 'iconPresets'));
 $svgContent = get_option('dblocks_svgContent', '');
@@ -9,7 +9,12 @@ $playButtonStyle = is_numeric(get_option('dblocks_playButtonStyle', 0)) ? (int)g
 
 // Local settings
 $quality = esc_attr($attributes['quality'] ?? 'maxresdefault');
+$url = esc_attr($attributes['url'] ?? '');
 $youtubeId = esc_attr($attributes['urlExtract'] ?? '');
+if (empty($youtubeId) && !empty($url)) {
+    preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^\"&?\/ ]{11})/', $url, $matches);
+    $youtubeId = $matches[1] ?? '';
+}
 $containerId = esc_attr($attributes['containerId'] ?? '');
 $customThumbnail = esc_attr($attributes['customThumbnail'] ?? '');
 // Include icons
