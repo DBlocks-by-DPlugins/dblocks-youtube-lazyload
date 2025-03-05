@@ -8,17 +8,17 @@ import {
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { BlockControls, InspectorControls, useBlockProps, HeightControl, PanelColorSettings } from '@wordpress/block-editor';
+import { BlockControls, useBlockProps } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
 import PlayContent from './components/playContent.js';
-import { qualityOptions, defaultQuality } from './utils/qualitySettings.js';
 import PlayerStyleButtons from './components/playButtonPresets.js';
 import { extractYoutubeId } from './utils/youtubeHelpers.js';
 import { renderPreview } from './components/renderPreview.js';
 import BlockControlsComponent from './controls/BlockControls.js';
-import sanitizeSVG from '@mattkrick/sanitize-svg';
 import { media } from '@wordpress/media-utils';
 import './editor.scss';
+import { fetchGlobalSettings } from './utils/api.js';
+import InspectorControlsComponent from './components/InspectorControls/InspectorControlsComponent.js';
 
 const STORE_NAME = 'dblocks/global-settings';
 
@@ -112,32 +112,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        const fetchGlobalSettings = async () => {
-            try {
-                const response = await fetch(`${wpApiSettings.root}dblocks-lazyload-for-youtube/v1/global-settings`, {
-                    headers: {
-                        'X-WP-Nonce': wpApiSettings.nonce,
-                    },
-                });
-                const settings = await response.json();
-                setGlobalSettings(settings);
-                setAttributes((prevAttributes) => ({
-                    ...prevAttributes,
-                    ...settings,
-                }));
-                if (settings.svgContent) {
-                    setSvgContent(settings.svgContent)
-                    setHasDropped(true);
-                    setAttributes({ 'svgContent': settings.svgContent })
-                }
-                globalSettingsLoaded.current = true;
-                setIsLoaded(true);
-            } catch (error) {
-                console.error('Failed to fetch global settings:', error);
-            }
-        };
-
-        fetchGlobalSettings();
+        fetchGlobalSettings(setGlobalSettings, setAttributes, setSvgContent, setHasDropped, globalSettingsLoaded, setIsLoaded);
     }, [setGlobalSettings, setAttributes]);
 
     useEffect(() => {
@@ -158,23 +133,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         setAttributes({ containerId: newContainerId });
     }, [setAttributes]);
 
-    const saveGlobalSetting = async (attribute, value) => {
-        setGlobalSetting(attribute, value);
-        setAttributes({ [attribute]: value });
-
-        try {
-            await fetch(`${wpApiSettings.root}dblocks-lazyload-for-youtube/v1/global-settings`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-WP-Nonce': wpApiSettings.nonce,
-                },
-                body: JSON.stringify({ [attribute]: value }),
-            });
-        } catch (error) {
-            console.error(`Failed to update global ${attribute}:`, error);
-        }
-    };
+  
 
     const handleUrlChange = (newUrl) => {
         const youtubeId = extractYoutubeId(newUrl);
@@ -182,30 +141,6 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         setErrorMessage('');
     };
 
-    const handleQualityChange = (newQuality) => {
-        setAttributes({ quality: newQuality });
-    };
-
-    const handlePlayButtonSizeChange = (newSize) => {
-        saveGlobalSetting('playButtonSize', newSize);
-    };
-
-    const handlePlayerStyleChange = (style) => {
-        const styleIndex = parseInt(style.replace('style', ''), 10) - 1;
-        saveGlobalSetting('playButtonStyle', styleIndex);
-    };
-
-    const handleColorChange = (colorValue) => {
-        saveGlobalSetting('color', colorValue);
-    };
-
-    const handleTextColorChange = (colorValue) => {
-        saveGlobalSetting('textColor', colorValue);
-    };
-
-    const handleIconTypeChange = (iconType) => {
-        saveGlobalSetting('iconType', iconType);
-    };
 
     const youtubeId = extractYoutubeId(url);
 
@@ -219,166 +154,21 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
         }
     };
 
-    const handleDrop = async (files) => {
-        const file = files[0];
-        if (file && file.type === 'image/svg+xml') {
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                let svg = event.target.result;
-                const cleanSvg = await sanitizeSVG(svg);
-
-                if (!cleanSvg) {
-                    alert('Invalid SVG content detected.');
-                    return;
-                }
-
-                const svgStart = cleanSvg.indexOf('<svg');
-                const svgEnd = cleanSvg.lastIndexOf('</svg>') + 6; // 6 is the length of '</svg>'
-
-                if (svgStart !== -1 && svgEnd !== -1) {
-                    svg = cleanSvg.substring(svgStart, svgEnd);
-                }
-
-                setSvgContent(svg);
-                setHasDropped(true);
-                await saveGlobalSetting('svgContent', svg); // Save SVG to the backend
-            };
-            reader.readAsText(file);
-        }
-    };
-
-    const handleRemoveIcon = () => {
-        setSvgContent('');
-        setHasDropped(false);
-        setAttributes({
-            playButtonStyle: 0,
-            svgContent: '',
-        });
-        saveGlobalSetting('svgContent', '');
-    };
-
-    const openMediaLibrary = () => {
-        const frame = wp.media({
-            title: 'Select or Upload Media',
-            button: {
-                text: 'Use this media',
-            },
-            multiple: false,
-        });
-
-        frame.on('select', () => {
-            const attachment = frame.state().get('selection').first().toJSON();
-            setAttributes({ customThumbnail: attachment.url });
-        });
-
-        frame.open();
-    };
-
-    const removeThumbnail = () => {
-        setAttributes({ customThumbnail: '' });
-    };
 
     return (
         <>
-            <InspectorControls>
-                <PanelBody title="Thumbnail" initialOpen={true}>
-                    <SelectControl
-                        label="Image Quality"
-                        value={quality}
-                        options={qualityOptions}
-                        onChange={handleQualityChange}
-                    />
-                    {customThumbnail ? (
-                        <>
-                            <div className="custom-thumbnail-preview">
-                                <img
-                                    src={customThumbnail}
-                                    alt="Custom Thumbnail Preview"
-                                    style={{ width: '100%', marginTop: '10px' }}
-                                />
-                                <div className="custom-thumbnail-preview__buttons">
-                                    <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={openMediaLibrary}>Replace</Button>
-                                    <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={removeThumbnail}>Remove</Button>
-                                </div>
-                            </div>
-                        </>
-                    ) : (
-                        <Button className='editor-post-featured-image__toggle editor-post-featured-image__toggle' onClick={openMediaLibrary}>Add Custom Thumbnail</Button>
-                    )}
-                </PanelBody>
+            <InspectorControlsComponent 
+            {...attributes}
+            setAttributes={setAttributes}
+            globalSettings={globalSettings}
+            setHasDropped={setHasDropped}
+            svgContent={svgContent}
+            hasDropped={hasDropped}
+            playButtonSize={playButtonSize}
+            setGlobalSetting={setGlobalSetting}
+            setSvgContent={setSvgContent}
+            />
 
-                <PanelBody title="Player Icon" initialOpen={true}>
-                    <ToggleGroupControl
-                        label="Icon Type"
-                        value={iconType}
-                        onChange={handleIconTypeChange}
-                        isBlock
-                        __nextHasNoMarginBottom
-                        __next40pxDefaultSize
-                    >
-                        <ToggleGroupControlOption value="iconPresets" label="Icon Presets" />
-                        <ToggleGroupControlOption value="custom" label="Custom SVG" />
-                    </ToggleGroupControl>
-
-                    {iconType === 'iconPresets' && (
-                        <PlayerStyleButtons
-                            handlePlayerStyleChange={handlePlayerStyleChange}
-                            initialStyleIndex={globalSettings.playButtonStyle}
-                            color={color}
-                            textColor={textColor}
-                        />
-                    )}
-
-                    {iconType === 'custom' && !svgContent && !hasDropped && (
-                        <div className="drop-zone-wrapper">
-                            {hasDropped ? 'Dropped!' : 'Drop something here'}
-                            <DropZone
-                                onFilesDrop={handleDrop}
-                                onHTMLDrop={() => setHasDropped(true)}
-                                onDrop={() => setHasDropped(true)}
-                            />
-                        </div>
-                    )}
-
-                    {iconType === 'custom' && hasDropped && svgContent && (
-                        <div className="svg-preview-wrapper">
-                            <div className="svg-preview drop-zone-wrapper" dangerouslySetInnerHTML={{ __html: svgContent }} />
-                            <Button
-                                variant="secondary"
-                                onClick={handleRemoveIcon}
-                            >
-                                Remove Icon
-                            </Button>
-                        </div>
-                    )}
-
-                    <HeightControl
-                        label="Size"
-                        value={playButtonSize || '64px'}
-                        onChange={handlePlayButtonSizeChange}
-                    />
-
-                    {iconType === 'iconPresets' && (
-                        <PanelColorSettings
-                            className="color-settings-youtubelazyload"
-                            title="Color Settings"
-                            colorSettings={[
-                                {
-                                    value: textColor,
-                                    onChange: handleTextColorChange,
-                                    label: 'Play Color',
-                                },
-                                {
-                                    value: color,
-                                    onChange: handleColorChange,
-                                    label: 'Play Background Color',
-                                },
-                            ]}
-                        />
-                    )}
-                </PanelBody>
-
-            </InspectorControls>
             <BlockControls>
                 <BlockControlsComponent
                     youtubeId={youtubeId}
