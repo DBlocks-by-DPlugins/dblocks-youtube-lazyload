@@ -7,7 +7,7 @@ import {
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import PlayerStyleButtons from '../playButtonPresets.js';
+import PlayerStyleButtons from '../BlockControls/playButtonPresets.js';
 import { PanelColorSettings, HeightControl } from '@wordpress/block-editor';
 
 

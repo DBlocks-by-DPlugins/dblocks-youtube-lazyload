@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { svgIcons } from './svgIcons';
+import { svgIcons } from '../svgIcons';
 
 const PlayButtonPresets = ({ handlePlayerStyleChange, initialStyleIndex }) => {
     const color = '#3c3c3c'; // Black

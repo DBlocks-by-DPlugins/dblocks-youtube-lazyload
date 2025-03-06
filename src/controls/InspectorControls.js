@@ -1,8 +1,8 @@
-import { InspectorControls, PanelColorSettings, HeightControl } from '@wordpress/block-editor';
-import { saveGlobalSetting } from '../../utils/api.js';
+import { PanelColorSettings, HeightControl } from '@wordpress/block-editor';
+import { saveGlobalSetting } from '../utils/api.js';
 import sanitizeSVG from '@mattkrick/sanitize-svg';
-import { Thumbnail } from './Thumbnail.js';
-import { PlayerIcon } from './PlayerIcon.js';
+import { Thumbnail } from '../components/InspectorControls/Thumbnail.js';
+import { PlayerIcon } from '../components/InspectorControls/PlayerIcon.js';
 
 const InspectorControlsComponent = ({
     setAttributes,
@@ -19,22 +19,6 @@ const InspectorControlsComponent = ({
     setGlobalSetting,
     setSvgContent
 }) => {
-
-    // const handleIconTypeChange = (iconType) => {
-    //     saveGlobalSetting('iconType', iconType, setGlobalSetting, setAttributes);
-    // };
-
-    // const handlePlayButtonSizeChange = (newSize) => {
-    //     saveGlobalSetting('playButtonSize', newSize, setGlobalSetting, setAttributes);
-    // };
-
-    // const handleTextColorChange = (colorValue) => {
-    //     saveGlobalSetting('textColor', colorValue, setGlobalSetting, setAttributes);
-    // };
-
-    // const handleColorChange = (colorValue) => {
-    //     saveGlobalSetting('color', colorValue, setGlobalSetting, setAttributes);
-    // };
 
     const handleChange = (attribute, value) => {
         saveGlobalSetting(attribute, value, setGlobalSetting, setAttributes);
@@ -109,7 +93,7 @@ const InspectorControlsComponent = ({
     };
 
     return (
-        <InspectorControls>
+        <>
 
             <Thumbnail
                 quality={quality}
@@ -134,7 +118,7 @@ const InspectorControlsComponent = ({
              handleDrop={handleDrop}
             />
 
-        </InspectorControls>
+        </>
     );
 };
 

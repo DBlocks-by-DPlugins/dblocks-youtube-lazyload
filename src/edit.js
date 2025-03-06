@@ -8,17 +8,17 @@ import {
     __experimentalToggleGroupControl as ToggleGroupControl,
     __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
-import { BlockControls, useBlockProps } from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { registerStore, useSelect, useDispatch } from '@wordpress/data';
-import PlayContent from './components/playContent.js';
-import PlayerStyleButtons from './components/playButtonPresets.js';
+import PlayContent from './components/BlockControls/playContent.js';
+import PlayerStyleButtons from './components/BlockControls/playButtonPresets.js';
 import { extractYoutubeId } from './utils/youtubeHelpers.js';
-import { renderPreview } from './components/renderPreview.js';
+import { renderPreview } from './components/BlockControls/renderPreview.js';
 import BlockControlsComponent from './controls/BlockControls.js';
 import { media } from '@wordpress/media-utils';
 import './editor.scss';
 import { fetchGlobalSettings } from './utils/api.js';
-import InspectorControlsComponent from './components/InspectorControls/InspectorControlsComponent.js';
+import InspectorControlsComponent from './controls/InspectorControls.js';
 
 const STORE_NAME = 'dblocks/global-settings';
 
@@ -157,17 +157,19 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
 
     return (
         <>
-            <InspectorControlsComponent 
-            {...attributes}
-            setAttributes={setAttributes}
-            globalSettings={globalSettings}
-            setHasDropped={setHasDropped}
-            svgContent={svgContent}
-            hasDropped={hasDropped}
-            playButtonSize={playButtonSize}
-            setGlobalSetting={setGlobalSetting}
-            setSvgContent={setSvgContent}
-            />
+            <InspectorControls>
+                <InspectorControlsComponent 
+                {...attributes}
+                setAttributes={setAttributes}
+                globalSettings={globalSettings}
+                setHasDropped={setHasDropped}
+                svgContent={svgContent}
+                hasDropped={hasDropped}
+                playButtonSize={playButtonSize}
+                setGlobalSetting={setGlobalSetting}
+                setSvgContent={setSvgContent}
+                />
+            </InspectorControls>
 
             <BlockControls>
                 <BlockControlsComponent

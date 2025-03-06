@@ -1,6 +1,6 @@
 import React from "react";
-import { extractYoutubeId, getPlaceholderImageUrl } from "../utils/youtubeHelpers";
-import { svgIcons } from "./svgIcons";
+import { extractYoutubeId, getPlaceholderImageUrl } from "../../utils/youtubeHelpers";
+import { svgIcons } from "../svgIcons";
 
 const PlayContent = ({
     url,
