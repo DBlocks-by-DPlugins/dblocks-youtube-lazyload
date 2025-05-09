@@ -10,6 +10,8 @@ export const Thumbnail = ({quality, handleQualityChange, customThumbnail, openMe
                 value={quality}
                 options={qualityOptions}
                 onChange={handleQualityChange}
+                __nextHasNoMarginBottom
+                __next40pxDefaultSize
             />
             {customThumbnail ? (
                 <>

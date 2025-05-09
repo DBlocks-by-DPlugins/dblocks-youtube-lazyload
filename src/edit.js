@@ -198,6 +198,7 @@ const Edit = ({ attributes, setAttributes, isSelected }) => {
                                 value={url}
                                 onChange={handleUrlChange}
                                 placeholder="Enter YouTube URL"
+                                __next40pxDefaultSize
                             />
                             <Button
                                 variant="primary"
