@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Plugin Name:       DBlocks Lazyload for YouTube
- * Description:       GDPR friendly block for lazyload youtube player that load content only if user click on the play video
+ * Plugin Name:       Lazy Load for YouTube by DBlocks
+ * Description:       GDPR friendly lazy load YouTube block. Only loads the video player when visitors click play. Boost page speed with lightweight placeholder images.
  * Requires at least: 6.5.2
  * Requires PHP:      7.4
- * Version:           1.2.8
+ * Version:           1.3.0
  * Author:            DPlugins
  * Author URI:        https://dplugins.com/
  * License:           GPL-2.0-or-later
@@ -29,3 +29,4 @@ define('DBLOCKS_YOUTUBE_LAZYLOAD_BASE', plugin_basename(__FILE__));
 require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/block-registration.php';
 require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/category.php';
 require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/api.php';
+require_once DBLOCKS_YOUTUBE_LAZYLOAD_PATH . 'inc/migration.php';

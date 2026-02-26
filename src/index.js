@@ -37,3 +37,20 @@ registerBlockType(metadata.name, {
 
     edit: Edit,
 });
+
+// Register the legacy block name so the editor recognizes old blocks
+// and allows transforming them to the new block
+registerBlockType('create-block/dp-lazy-youtube', {
+    title: 'Youtube LazyLoad (Legacy)',
+    icon: 'video-alt3',
+    category: 'dblocks',
+    attributes: metadata.attributes,
+    edit: ({ attributes }) => {
+        const el = wp.element.createElement;
+        return el('div', { style: { padding: '20px', background: '#f0f0f0', border: '1px solid #ccc' } },
+            el('p', null, 'This is a legacy YouTube LazyLoad block.'),
+            el('p', null, 'Use the block toolbar to transform it to the new "Youtube LazyLoad" block.')
+        );
+    },
+    save: () => null,
+});

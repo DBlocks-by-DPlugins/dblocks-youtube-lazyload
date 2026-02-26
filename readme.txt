@@ -1,28 +1,33 @@
-=== DBlocks Lazyload for YouTube ===
+=== Lazy Load for YouTube – GDPR Friendly YouTube Embed Block by DBlocks ===
 Contributors: dplugins, krstivoja
-Tags: youtube, lazy, load, gdpr, dblocks
+Tags: youtube, lazy load, youtube embed, gdpr, video
 Requires at least: 4.0
 Tested up to: 6.8.1
-Stable tag: 1.2.8
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-GDPR friendly lazyload youtube player that load content only if user click on the play video
+GDPR friendly lazy load YouTube block that only loads the video player when visitors click play. Boost page speed by replacing heavy YouTube embeds with a lightweight placeholder image.
 
 == Description ==
 
-**GDPR friendly lazyload youtube player that load content only if user click on the play video**
+**The GDPR friendly way to embed YouTube videos in WordPress.** This block replaces heavy YouTube iframes with a lightweight placeholder image and only loads the YouTube player when your visitor clicks play.
+
+No YouTube scripts or cookies are loaded until the user interacts — making your site faster and privacy compliant.
 
 ### Key Features:
 
--   **Icon styles**: Choose between 6 icon styles to apply them globaly
--   **Icon colors**: Use WordPress Theme colors to apply on play button
--   **Icon size**: Define size of the play button
--   **Custom play icon**: Ability to upload your own SVG play icon. 
--   **Styles are global**: Apply then once see changes across entire website
--   **Thumbnail image quality** choose what you will fetch from youtube
--   **Custom thumbnail**: Ability to upload your own thumbnail image.
+-   **GDPR & Privacy Friendly**: Zero YouTube scripts loaded until the user clicks play
+-   **Faster Page Speed**: Replaces heavy YouTube embeds with a lightweight image placeholder
+-   **6 Play Button Styles**: Choose from 6 icon presets and apply them globally
+-   **Custom Play Icon**: Upload your own SVG play icon
+-   **Theme Color Support**: Use your WordPress theme colors on the play button
+-   **Adjustable Icon Size**: Control the size of the play button
+-   **Thumbnail Quality**: Choose the YouTube thumbnail quality per block
+-   **Custom Thumbnail**: Upload your own thumbnail image for extra privacy
+-   **Global Settings**: Set icon style, colors, and size once — applies across your entire site
+-   **Free**: No premium upsells or locked features
 
 ### Third-Party Services
 
@@ -35,12 +40,6 @@ For more information about YouTube's services:
 - [YouTube Service Homepage](https://www.youtube.com)
 - [YouTube Terms of Service](https://www.youtube.com/t/terms)
 - [Google Privacy Policy](https://policies.google.com/privacy) (YouTube is owned by Google)
-
-### Why Choose YouTube Lazyload
-
--   **GDPR friendly**: It will not load google / youtube scripts unless user does not hit play button
--   **Optimised page speed**: It will laod image instead of entire video and youtube scripts on page load
--   **its Free**: There are other blocks like this but they are mostly payed
 
 ### Embeds
 
@@ -60,6 +59,11 @@ For more information about embeds:
 
 
 == Changelog ==
+
+= 1.3.0 =
+* Added automatic migration for legacy block name (create-block/dp-lazy-youtube)
+* Fixed YouTube embed Error 153 by updating iframe parameters and permissions
+* Legacy blocks now render correctly without requiring manual re-save
 
 = 1.2.7 =
 * Version bump

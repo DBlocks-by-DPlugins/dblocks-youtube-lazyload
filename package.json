@@ -12,7 +12,7 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^27.9.0",
+		"@wordpress/scripts": "^31.5.0",
 		"ignore": "^6.0.2"
 	},
 	"dependencies": {

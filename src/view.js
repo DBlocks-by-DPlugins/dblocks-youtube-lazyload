@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         while (targetElement != null) {
             if (
                 targetElement.matches(
-                    ".wp-block-dblocks-dblocks-lazyload-for-youtube .play-button"
+                    ".wp-block-dblocks-dblocks-lazyload-for-youtube .play-button, .lazy-youtube-player-container .play-button"
                 )
             ) {
                 const youtubeId = targetElement.getAttribute("data-youtube-id");
@@ -23,11 +23,12 @@ function loadYouTubeVideo(youtubeId, containerId) {
     const container = document.getElementById(containerId);
     if (container) {
         container.innerHTML = `
-            <iframe 
+            <iframe
                 style="width: 100%; aspect-ratio: 16/9; position: relative; height: auto;"
-                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0" 
-                frameborder="0" 
-                allow="autoplay; encrypted-media" 
+                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
             </iframe>`;
     } else {
