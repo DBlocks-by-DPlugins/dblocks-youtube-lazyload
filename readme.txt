@@ -3,7 +3,7 @@ Contributors: dplugins, krstivoja
 Tags: youtube, lazy load, youtube embed, gdpr, video
 Requires at least: 4.0
 Tested up to: 6.9.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,10 @@ For more information about embeds:
 
 
 == Changelog ==
+
+= 1.3.1 =
+
+* Release fix
 
 = 1.3.0 =
 * Added automatic migration for legacy block name (create-block/dp-lazy-youtube)
