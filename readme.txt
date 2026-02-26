@@ -2,7 +2,7 @@
 Contributors: dplugins, krstivoja
 Tags: youtube, lazy load, youtube embed, gdpr, video
 Requires at least: 4.0
-Tested up to: 6.8.1
+Tested up to: 6.9.1
 Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
