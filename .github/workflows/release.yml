@@ -38,7 +38,7 @@ jobs:
           zip -r dblocks-youtube-lazyload.zip .
 
       - name: "Create a GitHub Release"
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: dblocks-youtube-lazyload.zip
         env:
