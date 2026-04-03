@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-GDPR friendly lazy load YouTube block that only loads the video player when visitors click play. Boost page speed by replacing heavy YouTube embeds with a lightweight placeholder image.
+GDPR friendly lazy load YouTube block. Only loads the video player when visitors click play. Boost page speed.
 
 == Description ==
 
