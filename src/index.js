@@ -9,18 +9,14 @@ registerBlockType(metadata.name, {
             {
                 type: "block",
                 blocks: ["core/embed"],
-                transform: (attributes) => {
+                isMatch: (attributes) => {
                     const { url } = attributes;
-                    if (
-                        url &&
-                        (url.includes("youtube.com") ||
-                            url.includes("youtu.be"))
-                    ) {
-                        return createBlock("dblocks/dblocks-lazyload-for-youtube", {
-                            url,
-                        });
-                    }
-                    return createBlock("core/embed", attributes);
+                    return url && (url.includes("youtube.com") || url.includes("youtu.be"));
+                },
+                transform: (attributes) => {
+                    return createBlock("dblocks/dblocks-lazyload-for-youtube", {
+                        url: attributes.url,
+                    });
                 },
             },
             {

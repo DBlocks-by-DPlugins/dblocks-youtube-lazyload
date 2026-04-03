@@ -2,8 +2,8 @@
 Contributors: dplugins, krstivoja
 Tags: youtube, lazy load, youtube embed, gdpr, video
 Requires at least: 4.0
-Tested up to: 6.9.1
-Stable tag: 1.3.1
+Tested up to: 6.9.4
+Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,11 @@ For more information about embeds:
 
 
 == Changelog ==
+
+= 1.3.2 =
+
+* Fixed block editor crash when transforming non-YouTube embed blocks (Cannot read properties of null)
+* Added origin parameter to YouTube iframe embed URL
 
 = 1.3.1 =
 

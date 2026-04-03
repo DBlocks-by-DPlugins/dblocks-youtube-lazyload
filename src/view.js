@@ -22,10 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadYouTubeVideo(youtubeId, containerId) {
     const container = document.getElementById(containerId);
     if (container) {
+        const origin = window.location.origin;
         container.innerHTML = `
             <iframe
                 style="width: 100%; aspect-ratio: 16/9; position: relative; height: auto;"
-                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1"
+                src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&origin=${origin}"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
