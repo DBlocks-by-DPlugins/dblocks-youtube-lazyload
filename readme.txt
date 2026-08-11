@@ -1,8 +1,8 @@
 === Lazy Load for YouTube – GDPR Friendly YouTube Embed Block by DBlocks ===
 Contributors: dplugins, krstivoja
 Tags: youtube, lazy load, youtube embed, gdpr, video
-Requires at least: 4.0
-Tested up to: 6.9.4
+Requires at least: 6.5.2
+Tested up to: 7.0
 Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPL-2.0-or-later
