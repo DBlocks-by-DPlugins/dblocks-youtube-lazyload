@@ -60,6 +60,10 @@ For more information about embeds:
 
 == Changelog ==
 
+= Unreleased =
+* Patched `js-yaml` and `fast-uri` in the development dependency tree (GHSA-5p4m-2wfm-xmqj, CVE-2026-18446). Build tooling only — no released version was affected.
+* Excluded `CLAUDE.md` from the release zip.
+
 = 1.3.2 =
 
 * Fixed block editor crash when transforming non-YouTube embed blocks (Cannot read properties of null)
